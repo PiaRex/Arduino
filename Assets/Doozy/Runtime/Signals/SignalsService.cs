@@ -95,7 +95,7 @@ namespace Doozy.Runtime.Signals
         #region Streams
 
         public const string k_TypeCategory = "Type";
-        
+
         /// <summary> Streams Database </summary>
         public static readonly Dictionary<Guid, SignalStream> Streams = new Dictionary<Guid, SignalStream>();
 
@@ -130,7 +130,7 @@ namespace Doozy.Runtime.Signals
         /// </summary>
         internal static Guid GetNewStreamKey()
         {
-            Guid guid;
+            Guid guid = Guid.Empty;
             bool generateNewId = true;
             while (generateNewId)
             {
@@ -144,7 +144,7 @@ namespace Doozy.Runtime.Signals
         #region GetStream
 
         /// <summary> Create a new stream and get a reference to it </summary>
-        public static SignalStream GetStream() => 
+        public static SignalStream GetStream() =>
             AddStream(new SignalStream(GetNewStreamKey()));
 
         public static SignalStream GetTypeStream(string typeName) =>
@@ -248,7 +248,7 @@ namespace Doozy.Runtime.Signals
         /// <param name="streamName"> Target stream name </param>
         /// <param name="streamCategory"> Target stream category </param>
         /// <param name="message"> Text message used to pass info about this Signal </param>
-        public static bool SendSignal(string streamName, string streamCategory, string message) => 
+        public static bool SendSignal(string streamName, string streamCategory, string message) =>
             SendSignal(GetStream(streamName, streamCategory), message);
 
         /// <summary> Send a Signal on the stream with the given stream name and category, with a reference to the GameObject from where it is sent </summary>
@@ -256,7 +256,7 @@ namespace Doozy.Runtime.Signals
         /// <param name="streamCategory"> Target stream category </param>
         /// <param name="signalSource"> Reference to the GameObject from where this Signal is sent </param>
         /// <param name="message"> Text message used to pass info about this Signal </param>
-        public static bool SendSignal(string streamName, string streamCategory, GameObject signalSource, string message = "") => 
+        public static bool SendSignal(string streamName, string streamCategory, GameObject signalSource, string message = "") =>
             SendSignal(GetStream(streamName, streamCategory), signalSource, message);
 
         /// <summary> Send a Signal on the stream with the given stream name and category, with a reference to the SignalProvider that sent it </summary>
@@ -264,7 +264,7 @@ namespace Doozy.Runtime.Signals
         /// <param name="streamCategory"> Target stream category </param>
         /// <param name="signalProvider"> Reference to the SignalProvider that sends this Signal </param>
         /// <param name="message"> Text message used to pass info about this Signal </param>
-        public static bool SendSignal(string streamName, string streamCategory, SignalProvider signalProvider, string message = "") => 
+        public static bool SendSignal(string streamName, string streamCategory, SignalProvider signalProvider, string message = "") =>
             SendSignal(GetStream(streamName, streamCategory), signalProvider, message);
 
         /// <summary> Send a Signal on the stream with the given stream name and category, with a reference to the Object that sent it </summary>
@@ -272,7 +272,7 @@ namespace Doozy.Runtime.Signals
         /// <param name="streamCategory"> Target stream category </param>
         /// <param name="signalSender"> Reference to the Object that sends this Signal </param>
         /// <param name="message"> Text message used to pass info about this Signal </param>
-        public static bool SendSignal(string streamName, string streamCategory, Object signalSender, string message = "") => 
+        public static bool SendSignal(string streamName, string streamCategory, Object signalSender, string message = "") =>
             SendSignal(GetStream(streamName, streamCategory), signalSender, message);
 
         #endregion
@@ -284,7 +284,7 @@ namespace Doozy.Runtime.Signals
         /// <param name="streamCategory"> Target stream category </param>
         /// <param name="signalValue"> Signal value </param>
         /// <param name="message"> Text message used to pass info about this Signal </param>
-        public static bool SendSignal<T>(string streamName, string streamCategory, T signalValue, string message = "") => 
+        public static bool SendSignal<T>(string streamName, string streamCategory, T signalValue, string message = "") =>
             SendSignal(GetStream(streamName, streamCategory), signalValue, message);
 
         /// <summary> Send a MetaSignal on the stream with the given stream name and category, with a reference to the GameObject from where it is sent </summary>
@@ -294,7 +294,7 @@ namespace Doozy.Runtime.Signals
         /// <param name="signalSource"> Reference to the GameObject from where this Signal is sent </param>
         /// <param name="message"> Text message used to pass info about this Signal </param>
         /// <typeparam name="T"> Signal value type </typeparam>
-        public static bool SendSignal<T>(string streamName, string streamCategory, T signalValue, GameObject signalSource, string message = "") => 
+        public static bool SendSignal<T>(string streamName, string streamCategory, T signalValue, GameObject signalSource, string message = "") =>
             SendSignal(GetStream(streamName, streamCategory), signalValue, signalSource, message);
 
         /// <summary> Send a MetaSignal on the stream with the given stream name and category, with a reference to the SignalProvider that sent it </summary>
@@ -304,7 +304,7 @@ namespace Doozy.Runtime.Signals
         /// <param name="signalProvider"> Reference to the SignalProvider that sends this Signal </param>
         /// <param name="message"> Text message used to pass info about this Signal </param>
         /// <typeparam name="T"> Signal value type </typeparam>
-        public static bool SendSignal<T>(string streamName, string streamCategory, T signalValue, SignalProvider signalProvider, string message = "") => 
+        public static bool SendSignal<T>(string streamName, string streamCategory, T signalValue, SignalProvider signalProvider, string message = "") =>
             SendSignal(GetStream(streamName, streamCategory), signalValue, signalProvider, message);
 
         /// <summary> Send a MetaSignal on the stream with the given stream name and category, with a reference to the Object that sent it </summary>
@@ -314,7 +314,7 @@ namespace Doozy.Runtime.Signals
         /// <param name="signalSender"> Reference to the Object that sends this Signal </param>
         /// <param name="message"> Text message used to pass info about this Signal </param>
         /// <typeparam name="T"> Signal value type </typeparam>
-        public static bool SendSignal<T>(string streamName, string streamCategory, T signalValue, Object signalSender, string message = "") => 
+        public static bool SendSignal<T>(string streamName, string streamCategory, T signalValue, Object signalSender, string message = "") =>
             SendSignal(GetStream(streamName, streamCategory), signalValue, signalSender, message);
 
         #endregion
@@ -324,28 +324,28 @@ namespace Doozy.Runtime.Signals
         /// <summary> Send a Signal on the stream with the given stream name and default category </summary>
         /// <param name="streamName"> Target stream name </param>
         /// <param name="message"> Text message used to pass info about this Signal </param>
-        public static bool SendSignal(string streamName, string message = "") => 
+        public static bool SendSignal(string streamName, string message = "") =>
             SendSignal(GetStream(streamName), message);
 
         /// <summary> Send a Signal on the stream with the given stream name and default category, with a reference to the GameObject from where it is sent </summary>
         /// <param name="streamName"> Target stream name </param>
         /// <param name="signalSource"> Reference to the GameObject from where this Signal is sent </param>
         /// <param name="message"> Text message used to pass info about this Signal </param>
-        public static bool SendSignal(string streamName, GameObject signalSource, string message = "") => 
+        public static bool SendSignal(string streamName, GameObject signalSource, string message = "") =>
             SendSignal(GetStream(streamName), signalSource, message);
 
         /// <summary> Send a Signal on the stream with the given stream name and default category, with a reference to the SignalProvider that sent it </summary>
         /// <param name="streamName"> Target stream name </param>
         /// <param name="signalProvider"> Reference to the SignalProvider that sends this Signal </param>
         /// <param name="message"> Text message used to pass info about this Signal </param>
-        public static bool SendSignal(string streamName, SignalProvider signalProvider, string message = "") => 
+        public static bool SendSignal(string streamName, SignalProvider signalProvider, string message = "") =>
             SendSignal(GetStream(streamName), signalProvider, message);
 
         /// <summary> Send a Signal on the stream with the given stream name and default category, with a reference to the Object that sent it </summary>
         /// <param name="streamName"> Target stream name </param>
         /// <param name="signalSender"> Reference to the Object that sends this Signal </param>
         /// <param name="message"> Text message used to pass info about this Signal </param>
-        public static bool SendSignal(string streamName, Object signalSender, string message = "") => 
+        public static bool SendSignal(string streamName, Object signalSender, string message = "") =>
             SendSignal(GetStream(streamName), signalSender, message);
 
         #endregion
@@ -356,7 +356,7 @@ namespace Doozy.Runtime.Signals
         /// <param name="streamName"> Target stream name </param>
         /// <param name="signalValue"> Signal value </param>
         /// <param name="message"> Text message used to pass info about this Signal </param>
-        public static bool SendSignal<T>(string streamName, T signalValue, string message = "") => 
+        public static bool SendSignal<T>(string streamName, T signalValue, string message = "") =>
             SendSignal(GetStream(streamName), signalValue, message);
 
         /// <summary> Send a MetaSignal on the stream with the given stream name and default category, with a reference to the GameObject from where it is sent </summary>
@@ -365,7 +365,7 @@ namespace Doozy.Runtime.Signals
         /// <param name="signalSource"> Reference to the GameObject from where this Signal is sent </param>
         /// <param name="message"> Text message used to pass info about this Signal </param>
         /// <typeparam name="T"> Signal value type </typeparam>
-        public static bool SendSignal<T>(string streamName, T signalValue, GameObject signalSource, string message = "") => 
+        public static bool SendSignal<T>(string streamName, T signalValue, GameObject signalSource, string message = "") =>
             SendSignal(GetStream(streamName), signalValue, signalSource, message);
 
         /// <summary> Send a MetaSignal on the stream with the given stream name and default category, with a reference to the SignalProvider that sent it </summary>
@@ -374,7 +374,7 @@ namespace Doozy.Runtime.Signals
         /// <param name="signalProvider"> Reference to the SignalProvider that sends this Signal </param>
         /// <param name="message"> Text message used to pass info about this Signal </param>
         /// <typeparam name="T"> Signal value type </typeparam>
-        public static bool SendSignal<T>(string streamName, T signalValue, SignalProvider signalProvider, string message = "") => 
+        public static bool SendSignal<T>(string streamName, T signalValue, SignalProvider signalProvider, string message = "") =>
             SendSignal(GetStream(streamName), signalValue, signalProvider, message);
 
         /// <summary> Send a MetaSignal on the stream with the given stream name and default category, with a reference to the Object that sent it </summary>
@@ -383,7 +383,7 @@ namespace Doozy.Runtime.Signals
         /// <param name="signalSender"> Reference to the Object that sends this Signal </param>
         /// <param name="message"> Text message used to pass info about this Signal </param>
         /// <typeparam name="T"> Signal value type </typeparam>
-        public static bool SendSignal<T>(string streamName, T signalValue, Object signalSender, string message = "") => 
+        public static bool SendSignal<T>(string streamName, T signalValue, Object signalSender, string message = "") =>
             SendSignal(GetStream(streamName), signalValue, signalSender, message);
 
         #endregion
@@ -393,28 +393,28 @@ namespace Doozy.Runtime.Signals
         /// <summary> Send a Signal on the stream with the given stream key (Guid) </summary>
         /// <param name="streamKey"> Target stream key (Guid) </param>
         /// <param name="message"> Text message used to pass info about this Signal </param>
-        public static bool SendSignal(Guid streamKey, string message = "") => 
+        public static bool SendSignal(Guid streamKey, string message = "") =>
             SendSignal(FindStream(streamKey), message);
 
         /// <summary> Send a Signal on the stream with the given stream key (Guid), with a reference to the GameObject from where it was sent </summary>
         /// <param name="streamKey"> Target stream key (Guid) </param>
         /// <param name="signalSource"> Reference to the GameObject from where this Signal is sent from </param>
         /// <param name="message"> Text message used to pass info about this Signal </param>
-        public static bool SendSignal(Guid streamKey, GameObject signalSource, string message = "") => 
+        public static bool SendSignal(Guid streamKey, GameObject signalSource, string message = "") =>
             SendSignal(FindStream(streamKey), signalSource, message);
 
         /// <summary> Send a Signal on the stream with the given stream key (Guid), with a reference to the SignalProvider that sent it </summary>
         /// <param name="streamKey"> Target stream key (Guid) </param>
         /// <param name="signalProvider"> Reference to the SignalProvider that sends this Signal </param>
         /// <param name="message"> Text message used to pass info about this Signal </param>
-        public static bool SendSignal(Guid streamKey, SignalProvider signalProvider, string message = "") => 
+        public static bool SendSignal(Guid streamKey, SignalProvider signalProvider, string message = "") =>
             SendSignal(FindStream(streamKey), signalProvider, message);
 
         /// <summary> Send a Signal on the stream with the given stream key (Guid), with a reference to the Object that sent it </summary>
         /// <param name="streamKey"> Target stream key (Guid) </param>
         /// <param name="signalSender"> Reference to the Object that sends this Signal </param>
         /// <param name="message"> Text message used to pass info about this Signal </param>
-        public static bool SendSignal(Guid streamKey, Object signalSender, string message = "") => 
+        public static bool SendSignal(Guid streamKey, Object signalSender, string message = "") =>
             SendSignal(FindStream(streamKey), signalSender, message);
 
         #endregion
@@ -426,7 +426,7 @@ namespace Doozy.Runtime.Signals
         /// <param name="signalValue"> Signal value </param>
         /// <param name="message"> Text message used to pass info about this Signal </param>
         /// <typeparam name="T"> Signal value type </typeparam>
-        public static bool SendSignal<T>(Guid streamKey, T signalValue, string message = "") => 
+        public static bool SendSignal<T>(Guid streamKey, T signalValue, string message = "") =>
             SendSignal(FindStream(streamKey), signalValue, message);
 
         /// <summary> Send a MetaSignal on the stream with the given stream key (Guid), with a reference to the GameObject from where it was sent </summary>
@@ -435,7 +435,7 @@ namespace Doozy.Runtime.Signals
         /// <param name="signalSource"> Reference to the GameObject from where this Signal is sent from </param>
         /// <param name="message"> Text message used to pass info about this Signal </param>
         /// <typeparam name="T"> Signal value type </typeparam>
-        public static bool SendSignal<T>(Guid streamKey, T signalValue, GameObject signalSource, string message = "") => 
+        public static bool SendSignal<T>(Guid streamKey, T signalValue, GameObject signalSource, string message = "") =>
             SendSignal(FindStream(streamKey), signalValue, signalSource, message);
 
         /// <summary> Send a MetaSignal on the stream with the given stream key (Guid), with a reference to the SignalProvider that sent it </summary>
@@ -444,7 +444,7 @@ namespace Doozy.Runtime.Signals
         /// <param name="signalProvider"> Reference to the SignalProvider that sends this Signal </param>
         /// <param name="message"> Text message used to pass info about this Signal </param>
         /// <typeparam name="T"> Signal value type </typeparam>
-        public static bool SendSignal<T>(Guid streamKey, T signalValue, SignalProvider signalProvider, string message = "") => 
+        public static bool SendSignal<T>(Guid streamKey, T signalValue, SignalProvider signalProvider, string message = "") =>
             SendSignal(FindStream(streamKey), signalValue, signalProvider, message);
 
         /// <summary> Send a MetaSignal on the stream with the given stream key (Guid), with a reference to the Object that sent it </summary>
@@ -453,7 +453,7 @@ namespace Doozy.Runtime.Signals
         /// <param name="signalSender"> Reference to the Object that sends this Signal </param>
         /// <param name="message"> Text message used to pass info about this Signal </param>
         /// <typeparam name="T"> Signal value type </typeparam>
-        public static bool SendSignal<T>(Guid streamKey, T signalValue, Object signalSender, string message = "") => 
+        public static bool SendSignal<T>(Guid streamKey, T signalValue, Object signalSender, string message = "") =>
             SendSignal(FindStream(streamKey), signalValue, signalSender, message);
 
         #endregion
@@ -463,28 +463,28 @@ namespace Doozy.Runtime.Signals
         /// <summary> Send a Signal on the given stream </summary>
         /// <param name="stream"> Target signal stream </param>
         /// <param name="message"> Text message used to pass info about this Signal </param>
-        public static bool SendSignal(SignalStream stream, string message = "") => 
+        public static bool SendSignal(SignalStream stream, string message = "") =>
             stream != null && stream.SendSignal(message);
 
         /// <summary> Send a Signal on the given stream, with a reference to the GameObject from where it was sent </summary>
         /// <param name="stream"> Target signal stream </param>
         /// <param name="signalSource"> Reference to the GameObject from where this Signal is sent from </param>
         /// <param name="message"> Text message used to pass info about this Signal </param>
-        public static bool SendSignal(SignalStream stream, GameObject signalSource, string message = "") => 
+        public static bool SendSignal(SignalStream stream, GameObject signalSource, string message = "") =>
             stream != null && stream.SendSignal(signalSource, message);
 
         /// <summary> Send a Signal on the given stream, with a reference to the SignalProvider that sent it </summary>
         /// <param name="stream"> Target signal stream </param>
         /// <param name="signalProvider"> Reference to the SignalProvider that sends this Signal </param>
         /// <param name="message"> Text message used to pass info about this Signal </param>
-        public static bool SendSignal(SignalStream stream, SignalProvider signalProvider, string message = "") => 
+        public static bool SendSignal(SignalStream stream, SignalProvider signalProvider, string message = "") =>
             stream != null && stream.SendSignal(signalProvider, message);
 
         /// <summary> Send a Signal on the given stream, with a reference to the Object that sent it </summary>
         /// <param name="stream"> Target signal stream </param>
         /// <param name="signalSender"> Reference to the Object that sends this Signal </param>
         /// <param name="message"> Text message used to pass info about this Signal </param>
-        public static bool SendSignal(SignalStream stream, Object signalSender, string message = "") => 
+        public static bool SendSignal(SignalStream stream, Object signalSender, string message = "") =>
             stream != null && stream.SendSignal(signalSender, message);
 
         #endregion
@@ -496,7 +496,7 @@ namespace Doozy.Runtime.Signals
         /// <param name="signalValue"> Signal value </param>
         /// <param name="message"> Text message used to pass info about this Signal </param>
         /// <typeparam name="T"> Signal value type </typeparam>
-        public static bool SendSignal<T>(SignalStream stream, T signalValue, string message = "") => 
+        public static bool SendSignal<T>(SignalStream stream, T signalValue, string message = "") =>
             stream != null && stream.SendSignal(signalValue, message);
 
         /// <summary> Send a MetaSignal on the given stream, with a reference to the GameObject from where it was sent </summary>
@@ -505,7 +505,7 @@ namespace Doozy.Runtime.Signals
         /// <param name="signalSource"> Reference to the GameObject from where this Signal is sent from </param>
         /// <param name="message"> Text message used to pass info about this Signal </param>
         /// <typeparam name="T"> Signal value type </typeparam>
-        public static bool SendSignal<T>(SignalStream stream, T signalValue, GameObject signalSource, string message = "") => 
+        public static bool SendSignal<T>(SignalStream stream, T signalValue, GameObject signalSource, string message = "") =>
             stream != null && stream.SendSignal(signalValue, signalSource, message);
 
         /// <summary> Send a MetaSignal on the given stream, with a reference to the SignalProvider that sent it </summary>
@@ -523,7 +523,7 @@ namespace Doozy.Runtime.Signals
         /// <param name="signalSender"> Reference to the Object that sends this Signal </param>
         /// <param name="message"> Text message used to pass info about this Signal </param>
         /// <typeparam name="T"> Signal value type </typeparam>
-        public static bool SendSignal<T>(SignalStream stream, T signalValue, Object signalSender, string message = "") => 
+        public static bool SendSignal<T>(SignalStream stream, T signalValue, Object signalSender, string message = "") =>
             stream != null && stream.SendSignal(signalValue, signalSender, message);
 
         #endregion

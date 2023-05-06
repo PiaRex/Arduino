@@ -230,7 +230,7 @@ namespace Doozy.Editor.EditorUI.Components
 
         private void DataUpdate()
         {
-            listView.Refresh();
+            listView.Rebuild();
         }
 
         #region Visual Update
@@ -370,7 +370,7 @@ namespace Doozy.Editor.EditorUI.Components
         public FluidListView ShowItemIndex(bool show)
         {
             showItemIndex = show;
-            listView.Refresh();
+            listView.Rebuild();
             return this;
         }
 
