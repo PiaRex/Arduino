@@ -14,36 +14,36 @@ public class StartCode : MonoBehaviour
         workPanel = GameObject.Find("WorkSpaceGrid");
     }
 
-    public void ButtonStartStopClick()
-    {
-        if (!DataManager.Instance.isProgramStarted)
-        {
-            int childCount = workPanel.transform.childCount;
-            Debug.Log("Number of children: " + childCount);
+    // public void ButtonStartStopClick()
+    // {
+    //     // if (!DataManager.Instance.isProgramStarted)
+    //     {
+    //         int childCount = workPanel.transform.childCount;
+    //         Debug.Log("Number of children: " + childCount);
 
-            // Пробегаем по всем дочерним элементам объекта "WorkPanel"
-            float selectedScale = 1.2f;
+    //         // Пробегаем по всем дочерним элементам объекта "WorkPanel"
+    //         float selectedScale = 1.2f;
 
-            foreach (Transform child in workPanel.transform)
-            {
-                child.transform.localScale = new Vector3(selectedScale, selectedScale, selectedScale);
-            }
-            DataManager.Instance.ChangeButtonLabel("STOP");
-            DataManager.Instance.isProgramStarted = true;
-        }
-        else
-        {
-            DataManager.Instance.ChangeButtonLabel("START");
-        }
+    //         foreach (Transform child in workPanel.transform)
+    //         {
+    //             child.transform.localScale = new Vector3(selectedScale, selectedScale, selectedScale);
+    //         }
+    //         // DataManager.Instance.ChangeButtonLabel("STOP");
+    //         // DataManager.Instance.isProgramStarted = true;
+    //     }
+    //     else
+    //     {
+    //         // DataManager.Instance.ChangeButtonLabel("START");
+    //     }
 
 
-    }
-    public void ButtonResetClick()
-    {
-        foreach (Transform child in workPanel.transform)
-        {
-            Destroy(child.gameObject);
-        }
-
-    }
 }
+//     public void ButtonResetClick()
+//     {
+//         foreach (Transform child in workPanel.transform)
+//         {
+//             Destroy(child.gameObject);
+//         }
+
+//     }
+// }
