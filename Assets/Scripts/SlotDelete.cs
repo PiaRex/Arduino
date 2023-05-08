@@ -9,9 +9,9 @@ public class SlotDelete : MonoBehaviour, IDropHandler
     {
         var otherItemTransform = eventData.pointerDrag.transform;
         var otherItem = otherItemTransform.GetComponent<DragDrop>();
-        if (otherItem.dropParent == Window.instance.elementsPanel)
+        if (otherItem.dropParent.parent == Window.instance.elementsPanel)
         {
-            Debug.Log("РОДИТЕЛЬ ЭЛЕМЕНТ ПАНЕЛЬ" + otherItem.dropParent);
+            Debug.Log("РОДИТЕЛЬ ЭЛЕМЕНТ ПАНЕЛЬ" + otherItem.dropParent.name);
         }
         else
         {

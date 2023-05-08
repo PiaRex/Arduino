@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 
 public class Slot : MonoBehaviour, IDropHandler
@@ -17,9 +18,11 @@ public class Slot : MonoBehaviour, IDropHandler
         }
         else
         {
+
             var newItem = Instantiate(otherItemTransform.gameObject, Window.instance.WorkSpaceGrid);
             newItem.transform.localPosition = Vector3.zero;
             items.Add(newItem.GetComponent<BaseElementClass>());
+            newItem.GetComponent<Image>().raycastTarget = true;
             print("Item added");
         }
 
