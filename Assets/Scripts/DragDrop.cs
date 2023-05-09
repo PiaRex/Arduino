@@ -32,14 +32,14 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
     public void OnBeginDrag(PointerEventData eventData)
     {
         dropParent = transform.parent;
-        rectTransform.GetComponent<Image>().raycastTarget = false;
+        rectTransform.GetComponentInChildren<Image>().raycastTarget = false;
         rectTransform.SetParent(Window.instance.transform);
         print("OnBeginDrag");
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        rectTransform.GetComponent<Image>().raycastTarget = true;
+        rectTransform.GetComponentInChildren<Image>().raycastTarget = true;
         rectTransform.SetParent(dropParent);
         transform.localPosition = Vector3.zero;
         print("OnEndDrag");
