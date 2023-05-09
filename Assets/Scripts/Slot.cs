@@ -11,7 +11,7 @@ public class Slot : MonoBehaviour, IDropHandler
     private Vector3 currentPossition;
 
     private int totalChild;
-    public List<BaseElementClass> items = new List<BaseElementClass>();
+
 
     public void OnDrop(PointerEventData eventData)
     {
@@ -28,7 +28,7 @@ public class Slot : MonoBehaviour, IDropHandler
             newItem.transform.localPosition = Vector3.zero;
 
             // Add new item to the list
-            items.Add(newItem.GetComponent<BaseElementClass>());
+            Window.instance.commandElementsList.Add(newItem.GetComponent<BaseElementClass>());
             newItem.GetComponentInChildren<Image>().raycastTarget = true;
 
             print("SLOT     Item added");

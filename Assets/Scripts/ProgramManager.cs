@@ -37,12 +37,15 @@ public class ProgramManager : EventInvoker
             unityEvents[EventNames.StartProgramEvent].Invoke();
             StartButton.GetComponentInChildren<TMP_Text>().text = "STOP";
             isProgramRunning = true;
+            // TODO начало отправки сообщения
+            StartBluetoothSending();
         }
         else
         {
             unityEvents[EventNames.StopProgramEvent].Invoke();
             StartButton.GetComponentInChildren<TMP_Text>().text = "START";
             isProgramRunning = false;
+            // TODO Убить
         }
     }
 
@@ -64,7 +67,6 @@ public class ProgramManager : EventInvoker
         foreach (GameObject element in elements)
         {
             Destroy(element.GetComponent<DragDrop>());
-            print(element.name);
             element.GetComponent<UIButton>().interactable = false;
         }
     }
@@ -77,6 +79,19 @@ public class ProgramManager : EventInvoker
         {
             element.AddComponent<DragDrop>();
             element.GetComponent<UIButton>().interactable = true;
+        }
+    }
+
+    void StartBluetoothSending()
+    {
+        // foreach (BaseElementClass workSpaceElement in Window.instance.commandElementsList)
+        // {
+        //     workSpaceElement.getName();
+        // }
+        GameObject[] commandList = Window.instance.commandElementsList.ToArray();
+        foreach (GameObject workSpaceElement in Window.instance.WorkSpaceGrid.)
+        {
+            Debug.Log(workSpaceElement.name);
         }
     }
 }
