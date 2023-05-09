@@ -9,22 +9,19 @@ public class SlotItem : MonoBehaviour, IDropHandler
 {
     public void OnDrop(PointerEventData eventData)
     {
-        var otherItemTransform = eventData.pointerDrag.transform;
-        var otherItem = otherItemTransform.GetComponent<DragDrop>();
+        var dragItemTransform = eventData.pointerDrag.transform;
+        var dragItem = dragItemTransform.GetComponent<DragDrop>();
 
         var index = transform.GetSiblingIndex();
 
-        Debug.Log("SLOTITEM" + otherItem.dropParent + " is at index " + index + " in the array.");
+        Debug.Log("SLOTITEM" + dragItem.dropParent.name + " is at index " + index + " in the array.");
 
-        // Check if the position is already occupied
-        for (int i = 0; i < otherItem.dropParent.childCount; i++)
-        {
-            if (otherItem.dropParent.GetChild(i).GetComponent<SlotItem>().transform.GetSiblingIndex() == index)
-            {
-                // If occupied, remove existing item and shift others
-                otherItem.dropParent.GetChild(i).GetComponent<SlotItem>().transform.SetSiblingIndex(index);
+        // поместить элемент в родителя по указанному индексу
+        // Get the drag object and its parent
+        transform.SetSiblingIndex(index);
 
-            }
-        }
+
+
+        print("OnEndDrag");
     }
 }
