@@ -489,7 +489,7 @@ GameObject:
   - component: {fileID: 153191736}
   - component: {fileID: 153191747}
   m_Layer: 5
-  m_Name: Flex Icon Button (Tiny)
+  m_Name: ClearButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -622,9 +622,9 @@ MonoBehaviour:
       Event:
         m_PersistentCalls:
           m_Calls:
-          - m_Target: {fileID: 0}
-            m_TargetAssemblyTypeName: StartCode, Assembly-CSharp
-            m_MethodName: ButtonResetClick
+          - m_Target: {fileID: 1217490178}
+            m_TargetAssemblyTypeName: ProgramManager, Assembly-CSharp
+            m_MethodName: ClearClick
             m_Mode: 1
             m_Arguments:
               m_ObjectArgument: {fileID: 0}
@@ -4859,10 +4859,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Status: OK'
+  m_text: 'Status:'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
+  m_sharedMaterial: {fileID: 2140032, guid: dc36b3fdc14f47ebb36fd484a67e268a, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -11839,9 +11839,10 @@ GameObject:
   - component: {fileID: 638278815}
   - component: {fileID: 638278816}
   - component: {fileID: 638278818}
+  - component: {fileID: 638278819}
   m_Layer: 5
   m_Name: Arrow Down
-  m_TagString: Untagged
+  m_TagString: Element
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11984,6 +11985,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92dbb6ce07e23da44a64384d817e2efd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &638278819
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 638278814}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bf934cd1850e4f4495311637bb967f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dropParent: {fileID: 0}
 --- !u!1 &649337998
 GameObject:
   m_ObjectHideFlags: 0
@@ -16717,9 +16731,10 @@ GameObject:
   - component: {fileID: 1012624049}
   - component: {fileID: 1012624050}
   - component: {fileID: 1012624052}
+  - component: {fileID: 1012624053}
   m_Layer: 5
   m_Name: Arrow Right
-  m_TagString: Untagged
+  m_TagString: Element
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -16862,6 +16877,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92dbb6ce07e23da44a64384d817e2efd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1012624053
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1012624048}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bf934cd1850e4f4495311637bb967f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dropParent: {fileID: 0}
 --- !u!1 &1022738816
 GameObject:
   m_ObjectHideFlags: 0
@@ -16920,10 +16948,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Service Area
+  m_text: Microwave v0.51
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8a45ed483403b4050a137cf4553f9af1, type: 2}
+  m_sharedMaterial: {fileID: 8088079628875772496, guid: 8a45ed483403b4050a137cf4553f9af1, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -26594,6 +26622,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 92dbb6ce07e23da44a64384d817e2efd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1320851348
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1320851343}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bf934cd1850e4f4495311637bb967f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dropParent: {fileID: 0}
 --- !u!1 &1357525689
 GameObject:
   m_ObjectHideFlags: 0
@@ -30537,7 +30578,7 @@ GameObject:
   - component: {fileID: 1578223683}
   m_Layer: 5
   m_Name: Postament (1)
-  m_TagString: Untagged
+  m_TagString: Element
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -42340,5 +42381,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Arrow Left
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 3485340784905681621, guid: 6311b4f5fcdf02a45b30f91e96370b77, type: 3}
+      propertyPath: m_TagString
+      value: Element
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 3485340784905681611, guid: 6311b4f5fcdf02a45b30f91e96370b77, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 6311b4f5fcdf02a45b30f91e96370b77, type: 3}
