@@ -1,3 +1,4 @@
+using System.Net.Mime;
 using System.Reflection.Emit;
 using System.Collections;
 using System.Collections.Generic;
@@ -15,6 +16,7 @@ public class ProgramManager : EventInvoker
     GameObject StartButton, workSpaceGrid;
     bool isProgramRunning;
     List<GameObject> elements = new List<GameObject>();
+    List<GameObject> overlays = new List<GameObject>();
     void Awake()
     {
         EventManager.Initialize();
@@ -23,6 +25,7 @@ public class ProgramManager : EventInvoker
     {
         StartButton = GameObject.Find("StartButton");
         workSpaceGrid = GameObject.Find("WorkSpaceGrid");
+        overlays.AddRange(GameObject.FindGameObjectsWithTag("Overlay"));
         unityEvents.Add(EventNames.StartProgramEvent, new StartProgramEvent());
         unityEvents.Add(EventNames.StopProgramEvent, new StopProgramEvent());
         EventManager.AddInvoker(EventNames.StartProgramEvent, this);
@@ -58,9 +61,14 @@ public class ProgramManager : EventInvoker
     }
     void HandleStartProgramEvent()
     {
+        GameObject.Find("StatusText").GetComponent<TMP_Text>().color = new Color(0.05528744f, 0.5283019f, 0, 1);
         GameObject.Find("ClearButton").GetComponent<UIButton>().interactable = false;
         elements.Clear();
         elements.AddRange(GameObject.FindGameObjectsWithTag("Element"));
+        foreach (GameObject overlays in overlays)
+        {
+            overlays.GetComponent<UnityEngine.UI.Image>().color = new Color(0, 0, 0, 0.5f);
+        }
         foreach (GameObject element in elements)
         {
             Destroy(element.GetComponent<DragDrop>());
@@ -70,7 +78,12 @@ public class ProgramManager : EventInvoker
     }
     void HandleStopProgramEvent()
     {
+        GameObject.Find("StatusText").GetComponent<TMP_Text>().color = new Color(1, 1, 1, 1);
         GameObject.Find("ClearButton").GetComponent<UIButton>().interactable = true;
+        foreach (GameObject overlays in overlays)
+        {
+            overlays.GetComponent<UnityEngine.UI.Image>().color = new Color(0, 0, 0, 0);
+        }
         elements.Clear();
         elements.AddRange(GameObject.FindGameObjectsWithTag("Element"));
         foreach (GameObject element in elements)
