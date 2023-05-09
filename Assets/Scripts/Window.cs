@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
+
 
 public class Window : MonoBehaviour
 {
@@ -12,6 +15,8 @@ public class Window : MonoBehaviour
     private void Start()
     {
         instance = this;
+
+
     }
 
 
