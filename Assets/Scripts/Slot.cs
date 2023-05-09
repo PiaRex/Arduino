@@ -20,20 +20,18 @@ public class Slot : MonoBehaviour, IDropHandler
 
         if (otherItem.dropParent == Window.instance.WorkSpaceGrid)
         {
-            print("РОДИТЕЛЬ СПЭЙСВОРК" + otherItem.dropParent);
+            print("SLOT     РОДИТЕЛЬ СПЭЙСВОРК" + otherItem.dropParent);
         }
         else
         {
             var newItem = Instantiate(otherItemTransform.gameObject, Window.instance.WorkSpaceGrid);
             newItem.transform.localPosition = Vector3.zero;
 
-
-
             // Add new item to the list
             items.Add(newItem.GetComponent<BaseElementClass>());
             newItem.GetComponentInChildren<Image>().raycastTarget = true;
 
-            print("Item added");
+            print("SLOT     Item added");
         }
     }
 }

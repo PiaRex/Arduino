@@ -21,7 +21,7 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
     }
     public void OnPointerDown(PointerEventData eventData)
     {
-        Debug.Log("OnPointerDown");
+        Debug.Log("DRAGDROP      OnPointerDown");
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -34,7 +34,7 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
         dropParent = transform.parent;
         rectTransform.GetComponentInChildren<Image>().raycastTarget = false;
         rectTransform.SetParent(Window.instance.transform);
-        print("OnBeginDrag");
+        print("DRAGDROP      OnBeginDrag");
     }
 
     public void OnEndDrag(PointerEventData eventData)
@@ -42,7 +42,7 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
         rectTransform.GetComponentInChildren<Image>().raycastTarget = true;
         rectTransform.SetParent(dropParent);
         transform.localPosition = Vector3.zero;
-        print("OnEndDrag");
+        print("DRAGDROP      OnEndDrag");
     }
 }
 

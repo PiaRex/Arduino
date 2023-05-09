@@ -15,8 +15,6 @@ public class Window : MonoBehaviour
     private void Start()
     {
         instance = this;
-
-
     }
 
 

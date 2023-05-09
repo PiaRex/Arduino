@@ -14,14 +14,29 @@ public class SlotItem : MonoBehaviour, IDropHandler
 
         var index = transform.GetSiblingIndex();
 
-        Debug.Log("SLOTITEM" + dragItem.dropParent.name + " is at index " + index + " in the array.");
-
-        // поместить элемент в родителя по указанному индексу
-        // Get the drag object and its parent
-        transform.SetSiblingIndex(index);
+        Debug.Log("SLOTitem" + " Над чем рука: " + transform.name + "index " + index);
 
 
 
-        print("OnEndDrag");
+
+        if (dragItem.dropParent == Window.instance.WorkSpaceGrid)
+        {
+            // Move the item being dragged to the specified index in the parent object
+            dragItemTransform.SetParent(transform.parent);
+            dragItemTransform.SetSiblingIndex(index);
+            print("SLOTitem  родитель воркспейс меняем местами OnEndDrag");
+        }
+        else
+        {
+            var newItem = Instantiate(dragItemTransform.gameObject, Window.instance.WorkSpaceGrid);
+            newItem.transform.localPosition = Vector3.zero;
+            newItem.transform.SetSiblingIndex(index);
+
+            // todo добавление нового айтема в массив
+
+            newItem.GetComponentInChildren<Image>().raycastTarget = true;
+
+            print("SLOTitem родитель правая панель добавляем новый в массив Item added");
+        }
     }
 }
