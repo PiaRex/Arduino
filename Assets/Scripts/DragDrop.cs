@@ -10,14 +10,15 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
     private RectTransform rectTransform;
     public Transform dropParent;
     private Canvas canvas;
-
+    bool isProgramRunning;
 
 
     private void Awake()
     {
         rectTransform = GetComponent<RectTransform>();
         canvas = GetComponentInParent<Canvas>();
-
+        EventManager.AddListener(EventNames.StartProgramEvent, HandleStartProgramEvent);
+        EventManager.AddListener(EventNames.StopProgramEvent, HandleStopProgramEvent);
     }
     public void OnPointerDown(PointerEventData eventData)
     {
@@ -26,23 +27,49 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
 
     public void OnDrag(PointerEventData eventData)
     {
-        rectTransform.anchoredPosition += eventData.delta / canvas.scaleFactor;
+        if (!isProgramRunning)
+        {
+            rectTransform.anchoredPosition += eventData.delta / canvas.scaleFactor;
+        }
+
     }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        dropParent = transform.parent;
-        rectTransform.GetComponentInChildren<Image>().raycastTarget = false;
-        rectTransform.SetParent(Window.instance.transform);
-        print("OnBeginDrag");
+        if (!isProgramRunning)
+        {
+            dropParent = transform.parent;
+            rectTransform.GetComponentInChildren<Image>().raycastTarget = false;
+            rectTransform.SetParent(Window.instance.transform);
+            print("OnBeginDrag");
+        }
+
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        rectTransform.GetComponentInChildren<Image>().raycastTarget = true;
-        rectTransform.SetParent(dropParent);
-        transform.localPosition = Vector3.zero;
-        print("OnEndDrag");
+        if (!isProgramRunning)
+        {
+            rectTransform.GetComponentInChildren<Image>().raycastTarget = true;
+            rectTransform.SetParent(dropParent);
+            transform.localPosition = Vector3.zero;
+            print("OnEndDrag");
+        }
+    }
+    void HandleStartProgramEvent()
+    {
+        isProgramRunning = true;
+        print(isProgramRunning);
+    }
+    void HandleStopProgramEvent()
+    {
+
+        print(isProgramRunning);
+
+    }
+    void Update()
+    {
+        print(isProgramRunning);
     }
 }
 

@@ -12,6 +12,7 @@ public class Window : MonoBehaviour
 
     public Transform WorkSpaceGrid;
 
+
     private void Start()
     {
         instance = this;

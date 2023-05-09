@@ -5,10 +5,10 @@ using UnityEngine.Events;
 
 public class EventInvoker : MonoBehaviour
 {
-    protected Dictionary<EventNames, UnityEvent<bool>> unityEvents =
-        new Dictionary<EventNames, UnityEvent<bool>>();
+    protected Dictionary<EventNames, UnityEvent> unityEvents =
+        new Dictionary<EventNames, UnityEvent>();
 
-    public void AddListener(EventNames eventName, UnityAction<bool> listener)
+    public void AddListener(EventNames eventName, UnityAction listener)
     {
         if (unityEvents.ContainsKey(eventName))
         {

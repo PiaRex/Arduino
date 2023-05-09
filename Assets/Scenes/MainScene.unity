@@ -9747,7 +9747,7 @@ GameObject:
   - component: {fileID: 638219294}
   - component: {fileID: 638219303}
   m_Layer: 5
-  m_Name: ButtonStartStop
+  m_Name: StartButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9941,7 +9941,7 @@ MonoBehaviour:
       FromReferenceValue: 1
       ToReferenceValue: 0
       FromCustomValue: {r: 1, g: 1, b: 1, a: 1}
-      ToCustomValue: {r: 1, g: 1, b: 1, a: 1}
+      ToCustomValue: {r: 0.01802242, g: 0.4245283, b: 0.04574132, a: 1}
       FromHueOffset: 0
       ToHueOffset: 0
       FromSaturationOffset: 0
@@ -11708,13 +11708,34 @@ MonoBehaviour:
     Behaviours:
     - Enabled: 1
       EventName: PointerClick
-      Runners: []
+      Runners:
+      - Module: {fileID: 0}
+        ActionName: 
+        BoolValue: 0
+        ColorValue: {r: 0, g: 0, b: 0, a: 0}
+        DoubleValue: 0
+        FloatValue: 0
+        GameObjectValue: {fileID: 0}
+        IntValue: 0
+        LongValue: 0
+        MonoBehaviourValue: {fileID: 0}
+        GenericValue: {fileID: 0}
+        ScriptableObjectValue: {fileID: 0}
+        SpriteValue: {fileID: 0}
+        StringValue: 
+        TextureValue: {fileID: 0}
+        Texture2DValue: {fileID: 0}
+        Vector2Value: {x: 0, y: 0}
+        Vector3Value: {x: 0, y: 0, z: 0}
+        Vector4Value: {x: 0, y: 0, z: 0, w: 0}
+        Run: 0
+        IgnoreCooldown: 0
       Event:
         m_PersistentCalls:
           m_Calls:
-          - m_Target: {fileID: 0}
-            m_TargetAssemblyTypeName: StartCode, Assembly-CSharp
-            m_MethodName: ButtonStartStopClick
+          - m_Target: {fileID: 1217490178}
+            m_TargetAssemblyTypeName: ProgramManager, Assembly-CSharp
+            m_MethodName: StartStopClick
             m_Mode: 1
             m_Arguments:
               m_ObjectArgument: {fileID: 0}
@@ -11817,7 +11838,6 @@ GameObject:
   m_Component:
   - component: {fileID: 638278815}
   - component: {fileID: 638278816}
-  - component: {fileID: 638278817}
   - component: {fileID: 638278818}
   m_Layer: 5
   m_Name: Arrow Down
@@ -11952,19 +11972,6 @@ MonoBehaviour:
     Category: Direction
     Name: Down
     Custom: 0
---- !u!114 &638278817
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 638278814}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7bf934cd1850e4f4495311637bb967f8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dropParent: {fileID: 0}
 --- !u!114 &638278818
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16709,7 +16716,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1012624049}
   - component: {fileID: 1012624050}
-  - component: {fileID: 1012624051}
   - component: {fileID: 1012624052}
   m_Layer: 5
   m_Name: Arrow Right
@@ -16844,19 +16850,6 @@ MonoBehaviour:
     Category: Direction
     Name: Right
     Custom: 0
---- !u!114 &1012624051
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1012624048}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7bf934cd1850e4f4495311637bb967f8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dropParent: {fileID: 0}
 --- !u!114 &1012624052
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26223,6 +26216,7 @@ GameObject:
   - component: {fileID: 1217490177}
   - component: {fileID: 1217490176}
   - component: {fileID: 1217490175}
+  - component: {fileID: 1217490178}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -26296,6 +26290,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1217490178
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1217490174}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3bafae2913ac1143aa84f47be66fed7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1274253666
 GameObject:
   m_ObjectHideFlags: 0

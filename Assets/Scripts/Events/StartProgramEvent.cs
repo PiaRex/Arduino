@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class StartProgramEvent : UnityEvent<bool>
+public class StartProgramEvent : UnityEvent
 {
 
 }
