@@ -59,19 +59,24 @@ public class ProgramManager : EventInvoker
     void HandleStartProgramEvent()
     {
         GameObject.Find("ClearButton").GetComponent<UIButton>().interactable = false;
+        elements.Clear();
         elements.AddRange(GameObject.FindGameObjectsWithTag("Element"));
         foreach (GameObject element in elements)
         {
             Destroy(element.GetComponent<DragDrop>());
+            print(element.name);
+            element.GetComponent<UIButton>().interactable = false;
         }
     }
     void HandleStopProgramEvent()
     {
         GameObject.Find("ClearButton").GetComponent<UIButton>().interactable = true;
+        elements.Clear();
         elements.AddRange(GameObject.FindGameObjectsWithTag("Element"));
         foreach (GameObject element in elements)
         {
             element.AddComponent<DragDrop>();
+            element.GetComponent<UIButton>().interactable = true;
         }
     }
 }
