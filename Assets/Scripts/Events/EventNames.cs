@@ -5,5 +5,7 @@ using UnityEngine;
 public enum EventNames
 {
     StartProgramEvent,
-    StopProgramEvent
+    StopProgramEvent,
+    ErrorEvent,
+    ProgramCompletedEvent
 }

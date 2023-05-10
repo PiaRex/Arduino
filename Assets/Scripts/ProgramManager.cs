@@ -34,9 +34,12 @@ public class ProgramManager : EventInvoker
 
         unityEvents.Add(EventNames.StartProgramEvent, new StartProgramEvent());
         unityEvents.Add(EventNames.StopProgramEvent, new StopProgramEvent());
-
+        unityEvents.Add(EventNames.ErrorEvent, new ErrorEvent());
+        unityEvents.Add(EventNames.ProgramCompletedEvent, new ProgramCompletedEvent());
         EventManager.AddInvoker(EventNames.StartProgramEvent, this);
         EventManager.AddInvoker(EventNames.StopProgramEvent, this);
+        EventManager.AddInvoker(EventNames.ErrorEvent, this);
+        EventManager.AddInvoker(EventNames.ProgramCompletedEvent, this);
         EventManager.AddListener(EventNames.StartProgramEvent, HandleStartProgramEvent);
         EventManager.AddListener(EventNames.StopProgramEvent, HandleStopProgramEvent);
     }
@@ -135,7 +138,6 @@ public class ProgramManager : EventInvoker
         await Task.Delay(1000);
         return "OK";
     }
-
     void StopProgram()
     {
         unityEvents[EventNames.StopProgramEvent].Invoke();
@@ -147,4 +149,11 @@ public class ProgramManager : EventInvoker
     {
         statusText.GetComponent<TMP_Text>().text = "STATUS: " + command + ": " + status;
     }
-}
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+
+        }
+    }}
