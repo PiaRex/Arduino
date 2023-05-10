@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using UnityEngine.EventSystems;
 using Doozy.Runtime.UIManager;
 
+
 public class ProgramManager : EventInvoker
 {
     GameObject StartButton, workSpaceGrid, statusText;
@@ -110,20 +111,23 @@ public class ProgramManager : EventInvoker
         {
             // сделать текущую кнопку активной
             child.GetComponent<UIButton>().interactable = true;
-            // добавить кнопке UISelectionState.Highlighted
             child.GetComponent<UIButton>().SetState(UISelectionState.Highlighted);
-            var responceBluetooth = await sendBluetoothMessage(child.name);
-            string message = child.GetComponent<messageBluetooth>().message;
-            setStatusText(message, responceBluetooth);
+
+            string message = child.GetComponent<messageBluetooth>().message; // получаем мессагу из кнопки
+            var responceBluetooth = await sendBluetoothMessage(message); // отправляем мессагу в блютуз получаем респонс
+            setStatusText(message, responceBluetooth); // выводим статус
 
             Debug.Log("отправка сообщения: " + message + " статус: " + responceBluetooth);
+
+            // возвращаем кнопке неактивность
             child.GetComponent<UIButton>().SetState(UISelectionState.Normal);
             child.GetComponent<UIButton>().interactable = false;
-            // Todo если активно событие "нажата кнопка стоп" - то выйти из цикла
+
+            // стопаем выпонение если нажата кнопка стоп
             if (!isProgramRunning)
             {
+                StopProgram();
                 Debug.Log("Нажата кнопка стоп");
-
                 return;
             }
 
@@ -135,10 +139,13 @@ public class ProgramManager : EventInvoker
 
     async Task<string> sendBluetoothMessage(string message)
     {
-        // ожидание 1 секунда
+        TerminalController controller = new TerminalController();
+        controller.send(message);
+        // todo добавить ожидание ответа
         await Task.Delay(1000);
         return "OK";
     }
+
     void StopProgram()
     {
         unityEvents[EventNames.StopProgramEvent].Invoke();
@@ -151,6 +158,8 @@ public class ProgramManager : EventInvoker
         statusText.GetComponent<TMP_Text>().text = "STATUS: " + command + ": " + status;
     }
 
+
+    // todo а зачем ту это??????
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))

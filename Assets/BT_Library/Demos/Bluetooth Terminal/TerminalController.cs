@@ -74,11 +74,26 @@ public class TerminalController : MonoBehaviour
             device.close();
     }
 
-    public void send()
+    public void send(string message)
     {
-        if (device != null && !string.IsNullOrEmpty(dataToSend.text))
+        Debug.Log("TerminalController: попытка отправки сообщения: " + message + " на девайс - ");
+        if (device != null)
         {
-            device.send(System.Text.Encoding.ASCII.GetBytes(dataToSend.text + (char)10));//10 is our seperator Byte (sepration between packets)
+            Debug.Log("Bluetooth Sending : " + message + "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+            device.send(System.Text.Encoding.ASCII.GetBytes(message + (char)10));//10 is our seperator Byte (sepration between packets)
+        }
+    }
+
+    public void sendHello()
+    {
+        if (device != null)
+        {
+            /*
+			 * Send and Read works only with bytes. You need to convert everything to bytes.
+			 * Different devices with different encoding is the reason for this. You should know what encoding you're using.
+			 * In the method call below I'm using the ASCII encoding to send "Hello" + a new line.
+			 */
+            device.send(System.Text.Encoding.ASCII.GetBytes("Hello\n"));
         }
     }
 
