@@ -18,7 +18,9 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
     {
         rectTransform = GetComponent<RectTransform>();
         canvas = GetComponentInParent<Canvas>();
-        rightPanelDelete = GameObject.Find("RightPanelDelete");
+        rightPanelDelete = Window.instance.RightPanelDelete;
+
+        rightPanelDelete.SetActive(false);
     }
     public void OnPointerDown(PointerEventData eventData)
     {
@@ -36,7 +38,7 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
         rectTransform.GetComponentInChildren<Image>().raycastTarget = false;
         rectTransform.SetParent(Window.instance.transform);
 
-        // rightPanelDelete.SetActive(true);
+        rightPanelDelete.SetActive(true);
         print("DRAGDROP      OnBeginDrag");
     }
 
@@ -46,7 +48,7 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
         rectTransform.SetParent(dropParent);
         transform.localPosition = Vector3.zero;
 
-        // rightPanelDelete.SetActive(false);
+        rightPanelDelete.SetActive(false);
         print("DRAGDROP      OnEndDrag");
     }
 }

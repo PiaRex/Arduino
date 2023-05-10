@@ -113,9 +113,10 @@ public class ProgramManager : EventInvoker
             // добавить кнопке UISelectionState.Highlighted
             child.GetComponent<UIButton>().SetState(UISelectionState.Highlighted);
             var responceBluetooth = await sendBluetoothMessage(child.name);
+            string message = child.GetComponent<messageBluetooth>().message;
+            setStatusText(message, responceBluetooth);
 
-            setStatusText(child.name, responceBluetooth);
-            Debug.Log("отправка сообщения: " + child.name + " статус: " + responceBluetooth);
+            Debug.Log("отправка сообщения: " + message + " статус: " + responceBluetooth);
             child.GetComponent<UIButton>().SetState(UISelectionState.Normal);
             child.GetComponent<UIButton>().interactable = false;
             // Todo если активно событие "нажата кнопка стоп" - то выйти из цикла
@@ -156,4 +157,5 @@ public class ProgramManager : EventInvoker
         {
 
         }
-    }}
+    }
+}

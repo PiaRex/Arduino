@@ -17,6 +17,7 @@ public class SlotDelete : MonoBehaviour, IDropHandler
         {
             // уничтожить текущий элемент
             Destroy(otherItem.gameObject);
+            Window.instance.RightPanelDelete.SetActive(false);
             Debug.Log("Item deleted");
         }
 

@@ -16,7 +16,7 @@ public class Window : MonoBehaviour
 
     public List<BaseElementClass> commandElementsList = new List<BaseElementClass>();
 
-    private void Start()
+    private void Awake()
     {
         instance = this;
     }
