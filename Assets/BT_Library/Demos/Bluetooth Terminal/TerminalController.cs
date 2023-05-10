@@ -14,7 +14,7 @@ public class TerminalController : MonoBehaviour
 
     public GameObject InfoCanvas;
     public GameObject DataCanvas;
-    private BluetoothDevice device;
+    public BluetoothDevice device;
     public Text dataToSend;
 
     void Awake()

@@ -14,11 +14,12 @@ using Doozy.Runtime.UIManager.Components;
 using System.Threading.Tasks;
 using UnityEngine.EventSystems;
 using Doozy.Runtime.UIManager;
+using TechTweaking.Bluetooth;
 
 
 public class ProgramManager : EventInvoker
 {
-    GameObject StartButton, workSpaceGrid, statusText;
+    GameObject StartButton, workSpaceGrid, statusText, infoController;
     bool isProgramRunning;
     List<GameObject> elements = new List<GameObject>();
     List<GameObject> overlays = new List<GameObject>();
@@ -32,6 +33,7 @@ public class ProgramManager : EventInvoker
         workSpaceGrid = GameObject.Find("WorkSpaceGrid");
         overlays.AddRange(GameObject.FindGameObjectsWithTag("Overlay"));
         statusText = GameObject.Find("StatusText");
+        infoController = Window.instance.InfoController;
 
         unityEvents.Add(EventNames.StartProgramEvent, new StartProgramEvent());
         unityEvents.Add(EventNames.StopProgramEvent, new StopProgramEvent());
@@ -115,6 +117,9 @@ public class ProgramManager : EventInvoker
 
             string message = child.GetComponent<messageBluetooth>().message; // получаем мессагу из кнопки
             var responceBluetooth = await sendBluetoothMessage(message); // отправляем мессагу в блютуз получаем респонс
+
+            infoController.GetComponent<TerminalController>().send(message);
+
             setStatusText(message, responceBluetooth); // выводим статус
 
             Debug.Log("отправка сообщения: " + message + " статус: " + responceBluetooth);
@@ -140,7 +145,9 @@ public class ProgramManager : EventInvoker
     async Task<string> sendBluetoothMessage(string message)
     {
         TerminalController controller = new TerminalController();
-        controller.send(message);
+        controller.device = new BluetoothDevice();
+        controller.send("Hello, world!");
+
         // todo добавить ожидание ответа
         await Task.Delay(1000);
         return "OK";

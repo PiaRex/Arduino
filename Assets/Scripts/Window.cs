@@ -14,6 +14,8 @@ public class Window : MonoBehaviour
 
     public GameObject RightPanelDelete;
 
+    public GameObject InfoController;
+
     public List<BaseElementClass> commandElementsList = new List<BaseElementClass>();
 
     private void Awake()
