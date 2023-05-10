@@ -6,6 +6,6 @@ public class BaseElementClass : MonoBehaviour
 {
     public void getName()
     {
-        Debug.Log("getName");
+        Debug.Log("this");
     }
 }

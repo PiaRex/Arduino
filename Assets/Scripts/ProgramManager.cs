@@ -9,6 +9,8 @@ using TMPro;
 using Doozy.Runtime.Reactor;
 using Doozy.Runtime.Reactor.Animations;
 using Doozy.Runtime.UIManager.Components;
+using System.Threading.Tasks;
+
 
 public class ProgramManager : EventInvoker
 {
@@ -45,7 +47,6 @@ public class ProgramManager : EventInvoker
             unityEvents[EventNames.StopProgramEvent].Invoke();
             StartButton.GetComponentInChildren<TMP_Text>().text = "START";
             isProgramRunning = false;
-            // TODO Убить
         }
     }
 
@@ -82,16 +83,24 @@ public class ProgramManager : EventInvoker
         }
     }
 
-    void StartBluetoothSending()
+    async void StartBluetoothSending()
     {
-        // foreach (BaseElementClass workSpaceElement in Window.instance.commandElementsList)
-        // {
-        //     workSpaceElement.getName();
-        // }
-        GameObject[] commandList = Window.instance.commandElementsList.ToArray();
-        foreach (GameObject workSpaceElement in Window.instance.WorkSpaceGrid.)
+        Debug.Log("Начало отправки");
+
+        GameObject workPanel = GameObject.Find("WorkSpaceGrid");
+        foreach (Transform child in workPanel.transform)
         {
-            Debug.Log(workSpaceElement.name);
+            await sendBluetoothMessage(child.name);
+
+            // Todo если активно событие "нажата кнопка стоп" - то выйти из цикла
         }
+        Debug.Log("Конец отправки");
+    }
+
+    async Task sendBluetoothMessage(string message)
+    {
+        Debug.Log("message: " + message);
+        // ожидание 1 секунда
+        await Task.Delay(1000);
     }
 }
