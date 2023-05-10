@@ -12,6 +12,8 @@ public class Window : MonoBehaviour
 
     public Transform WorkSpaceGrid;
 
+    public GameObject RightPanelDelete;
+
     public List<BaseElementClass> commandElementsList = new List<BaseElementClass>();
 
     private void Start()

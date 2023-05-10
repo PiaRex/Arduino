@@ -5,19 +5,20 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+
 public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, IEndDragHandler, IDragHandler
 {
     private RectTransform rectTransform;
     public Transform dropParent;
     private Canvas canvas;
+    private GameObject rightPanelDelete;
 
 
-
-    private void Awake()
+    private void Start()
     {
         rectTransform = GetComponent<RectTransform>();
         canvas = GetComponentInParent<Canvas>();
-
+        rightPanelDelete = GameObject.Find("RightPanelDelete");
     }
     public void OnPointerDown(PointerEventData eventData)
     {
@@ -34,6 +35,8 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
         dropParent = transform.parent;
         rectTransform.GetComponentInChildren<Image>().raycastTarget = false;
         rectTransform.SetParent(Window.instance.transform);
+
+        // rightPanelDelete.SetActive(true);
         print("DRAGDROP      OnBeginDrag");
     }
 
@@ -42,6 +45,8 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
         rectTransform.GetComponentInChildren<Image>().raycastTarget = true;
         rectTransform.SetParent(dropParent);
         transform.localPosition = Vector3.zero;
+
+        // rightPanelDelete.SetActive(false);
         print("DRAGDROP      OnEndDrag");
     }
 }

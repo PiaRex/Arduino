@@ -1,3 +1,4 @@
+using System;
 using System.Net.Mime;
 using System.Reflection.Emit;
 using System.Collections;
@@ -11,11 +12,12 @@ using Doozy.Runtime.Reactor;
 using Doozy.Runtime.Reactor.Animations;
 using Doozy.Runtime.UIManager.Components;
 using System.Threading.Tasks;
+using UnityEngine.EventSystems;
 
 
 public class ProgramManager : EventInvoker
 {
-    GameObject StartButton, workSpaceGrid;
+    GameObject StartButton, workSpaceGrid, statusText;
     bool isProgramRunning;
     List<GameObject> elements = new List<GameObject>();
     List<GameObject> overlays = new List<GameObject>();
@@ -28,8 +30,11 @@ public class ProgramManager : EventInvoker
         StartButton = GameObject.Find("StartButton");
         workSpaceGrid = GameObject.Find("WorkSpaceGrid");
         overlays.AddRange(GameObject.FindGameObjectsWithTag("Overlay"));
+        statusText = GameObject.Find("StatusText");
+
         unityEvents.Add(EventNames.StartProgramEvent, new StartProgramEvent());
         unityEvents.Add(EventNames.StopProgramEvent, new StopProgramEvent());
+
         EventManager.AddInvoker(EventNames.StartProgramEvent, this);
         EventManager.AddInvoker(EventNames.StopProgramEvent, this);
         EventManager.AddListener(EventNames.StartProgramEvent, HandleStartProgramEvent);
@@ -65,7 +70,7 @@ public class ProgramManager : EventInvoker
     }
     void HandleStartProgramEvent()
     {
-        GameObject.Find("StatusText").GetComponent<TMP_Text>().color = new Color(0.05528744f, 0.5283019f, 0, 1);
+        statusText.GetComponent<TMP_Text>().color = new Color(0.05528744f, 0.5283019f, 0, 1);
         GameObject.Find("ClearButton").GetComponent<UIButton>().interactable = false;
         elements.Clear();
         elements.AddRange(GameObject.FindGameObjectsWithTag("Element"));
@@ -81,7 +86,7 @@ public class ProgramManager : EventInvoker
     }
     void HandleStopProgramEvent()
     {
-        GameObject.Find("StatusText").GetComponent<TMP_Text>().color = new Color(1, 1, 1, 1);
+        statusText.GetComponent<TMP_Text>().color = new Color(1, 1, 1, 1);
         GameObject.Find("ClearButton").GetComponent<UIButton>().interactable = true;
         foreach (GameObject overlays in overlays)
         {
@@ -103,17 +108,30 @@ public class ProgramManager : EventInvoker
         GameObject workPanel = GameObject.Find("WorkSpaceGrid");
         foreach (Transform child in workPanel.transform)
         {
-            await sendBluetoothMessage(child.name);
-
+            // сделать текущую кнопку активной
+            child.GetComponent<UIButton>().interactable = true;
+            // добавить кнопке UISelectionState.Highlighted
+            // child.GetComponent<UIButton>().highlightedState;
+            var responceBluetooth = await sendBluetoothMessage(child.name);
+            Debug.Log("отправка сообщения: " + child.name + " статус: " + responceBluetooth);
+            child.GetComponent<UIButton>().interactable = false;
             // Todo если активно событие "нажата кнопка стоп" - то выйти из цикла
+            if (!isProgramRunning)
+            {
+                Debug.Log("Нажата кнопка стоп");
+                return;
+            }
+
+
         }
+
         Debug.Log("Конец отправки");
     }
 
-    async Task sendBluetoothMessage(string message)
+    async Task<string> sendBluetoothMessage(string message)
     {
-        Debug.Log("message: " + message);
         // ожидание 1 секунда
         await Task.Delay(1000);
+        return "OK";
     }
 }
