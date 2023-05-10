@@ -12,6 +12,7 @@ public class Window : MonoBehaviour
 
     public Transform WorkSpaceGrid;
 
+    public List<BaseElementClass> commandElementsList = new List<BaseElementClass>();
 
     private void Start()
     {

@@ -4,5 +4,8 @@ using UnityEngine;
 
 public class BaseElementClass : MonoBehaviour
 {
-
+    public void getName()
+    {
+        Debug.Log("this");
+    }
 }
