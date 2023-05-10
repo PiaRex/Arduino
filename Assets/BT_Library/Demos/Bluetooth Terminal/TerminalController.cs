@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class TerminalController : MonoBehaviour
 {
-
+    private const string UUID = "0acc9c7c-48e1-41d2-acaa-610d1a7b085e";
     public Text devicNameText;
     public Text status;
     public ScrollTerminalUI readDataText;//ScrollTerminalUI is a script used to control the ScrollView text
@@ -41,8 +41,7 @@ public class TerminalController : MonoBehaviour
         this.device = device;//save a global reference to the device
 
 
-        //this.device.UUID = UUID; //This is not required for HC-05/06 devices and many other electronic bluetooth modules.
-
+        this.device.UUID = UUID; //This is not required for HC-05/06 devices and many other electronic bluetooth modules.
 
         //Here we assign the 'Coroutine' that will handle your reading Functionality, this will improve your code style
         //Another way to achieve this would be listening to the event Bt.OnReadingStarted, and starting the courotine from there by yourself.
