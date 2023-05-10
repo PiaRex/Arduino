@@ -13,7 +13,7 @@ using Doozy.Runtime.Reactor.Animations;
 using Doozy.Runtime.UIManager.Components;
 using System.Threading.Tasks;
 using UnityEngine.EventSystems;
-
+using Doozy.Runtime.UIManager;
 
 public class ProgramManager : EventInvoker
 {
@@ -47,14 +47,11 @@ public class ProgramManager : EventInvoker
             unityEvents[EventNames.StartProgramEvent].Invoke();
             StartButton.GetComponentInChildren<TMP_Text>().text = "STOP";
             isProgramRunning = true;
-            // TODO начало отправки сообщения
             StartBluetoothSending();
         }
         else
         {
-            unityEvents[EventNames.StopProgramEvent].Invoke();
-            StartButton.GetComponentInChildren<TMP_Text>().text = "START";
-            isProgramRunning = false;
+            StopProgram();
         }
     }
 
@@ -111,20 +108,24 @@ public class ProgramManager : EventInvoker
             // сделать текущую кнопку активной
             child.GetComponent<UIButton>().interactable = true;
             // добавить кнопке UISelectionState.Highlighted
-            // child.GetComponent<UIButton>().highlightedState;
+            child.GetComponent<UIButton>().SetState(UISelectionState.Highlighted);
             var responceBluetooth = await sendBluetoothMessage(child.name);
+
+            setStatusText(child.name, responceBluetooth);
             Debug.Log("отправка сообщения: " + child.name + " статус: " + responceBluetooth);
+            child.GetComponent<UIButton>().SetState(UISelectionState.Normal);
             child.GetComponent<UIButton>().interactable = false;
             // Todo если активно событие "нажата кнопка стоп" - то выйти из цикла
             if (!isProgramRunning)
             {
                 Debug.Log("Нажата кнопка стоп");
+
                 return;
             }
 
 
         }
-
+        StopProgram();
         Debug.Log("Конец отправки");
     }
 
@@ -133,5 +134,17 @@ public class ProgramManager : EventInvoker
         // ожидание 1 секунда
         await Task.Delay(1000);
         return "OK";
+    }
+
+    void StopProgram()
+    {
+        unityEvents[EventNames.StopProgramEvent].Invoke();
+        StartButton.GetComponentInChildren<TMP_Text>().text = "START";
+        isProgramRunning = false;
+    }
+
+    void setStatusText(string command, string status)
+    {
+        statusText.GetComponent<TMP_Text>().text = "STATUS: " + command + ": " + status;
     }
 }
