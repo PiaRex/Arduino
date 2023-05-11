@@ -11,9 +11,9 @@ using TMPro;
 using Doozy.Runtime.Reactor;
 using Doozy.Runtime.Reactor.Animations;
 using Doozy.Runtime.UIManager.Components;
+using Doozy.Runtime.UIManager;
 using System.Threading.Tasks;
 using UnityEngine.EventSystems;
-using Doozy.Runtime.UIManager;
 using TechTweaking.Bluetooth;
 
 
@@ -73,6 +73,7 @@ public class ProgramManager : EventInvoker
     }
     void HandleStartProgramEvent()
     {
+        statusText.GetComponent<TMP_Text>().text = "STATUS:";
         statusText.GetComponent<TMP_Text>().color = new Color(0.05528744f, 0.5283019f, 0, 1);
         GameObject.Find("ClearButton").GetComponent<UIButton>().interactable = false;
         elements.Clear();
@@ -157,6 +158,7 @@ public class ProgramManager : EventInvoker
     {
         unityEvents[EventNames.StopProgramEvent].Invoke();
         StartButton.GetComponentInChildren<TMP_Text>().text = "START";
+        statusText.GetComponent<TMP_Text>().text = "STATUS:";
         isProgramRunning = false;
     }
 

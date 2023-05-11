@@ -1,18 +1,17 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-
+using TMPro;
 using TechTweaking.Bluetooth;
 using UnityEngine.UI;
 
 public class TerminalController : MonoBehaviour
 {
     private const string UUID = "0acc9c7c-48e1-41d2-acaa-610d1a7b085e";
-    public Text devicNameText;
-    public Text status;
+    public TMP_Text statusText;
     public ScrollTerminalUI readDataText;//ScrollTerminalUI is a script used to control the ScrollView text
 
-    public GameObject InfoCanvas;
+    public GameObject BluetoothPanel, ConnectionButton;
     public GameObject DataCanvas;
     public BluetoothDevice device;
     public Text dataToSend;
@@ -25,14 +24,13 @@ public class TerminalController : MonoBehaviour
         BluetoothAdapter.OnDevicePicked += HandleOnDevicePicked; //To get what device the user picked out of the devices list
 
     }
-
     void HandleOnDeviceOff(BluetoothDevice dev)
     {
         if (!string.IsNullOrEmpty(dev.Name))
-            status.text = "Couldn't connect to " + dev.Name + ", device might be OFF";
+            statusText.text = "Couldn't connect to " + dev.Name + ", device might be OFF";
         else if (!string.IsNullOrEmpty(dev.MacAddress))
         {
-            status.text = "Couldn't connect to " + dev.MacAddress + ", device might be OFF";
+            statusText.text = "Couldn't connect to " + dev.MacAddress + ", device might be OFF";
         }
     }
 
@@ -48,7 +46,7 @@ public class TerminalController : MonoBehaviour
         device.ReadingCoroutine = ManageConnection;
 
 
-        devicNameText.text = "Remote Device : " + device.Name;
+        statusText.text = "Remote Device : " + device.Name;
 
     }
 
@@ -64,8 +62,11 @@ public class TerminalController : MonoBehaviour
         if (device != null)
         {
             device.connect();
-            status.text = "Trying to connect...";
+
+            statusText.text = "Remote Device : " + device.Name + ". Trying to connect...";
         }
+        else
+            statusText.text = "Remote Device not selected";
     }
 
     public void disconnect()//Disconnect the public global variable "device" if it's not null.
@@ -109,7 +110,6 @@ public class TerminalController : MonoBehaviour
     {//Manage Reading Coroutine
 
         //Switch to Terminal View
-        InfoCanvas.SetActive(false);
         DataCanvas.SetActive(true);
 
 
@@ -139,7 +139,6 @@ public class TerminalController : MonoBehaviour
         }
         //Switch to Menue View after reading stoped
         DataCanvas.SetActive(false);
-        InfoCanvas.SetActive(true);
     }
 
 
@@ -149,5 +148,13 @@ public class TerminalController : MonoBehaviour
         BluetoothAdapter.OnDevicePicked -= HandleOnDevicePicked;
         BluetoothAdapter.OnDeviceOFF -= HandleOnDeviceOff;
     }
+    public void OnSwitchOn()
+    {
+        BluetoothPanel.SetActive(true);
 
+    }
+    public void OnSwitchOff()
+    {
+        BluetoothPanel.SetActive(false);
+    }
 }
