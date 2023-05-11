@@ -113,8 +113,16 @@ public class TerminalController : MonoBehaviour
             }
             count++;
         }
+        if (content != null)
+        {
+            return content;
+        }
+        else
+        {
+            return "нет ответа";
+        }
 
-        return content;
+
     }
 
 
