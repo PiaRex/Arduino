@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using TechTweaking.Bluetooth;
 using UnityEngine.UI;
+using System.Threading.Tasks;
 
 public class TerminalController : MonoBehaviour
 {
@@ -39,10 +40,6 @@ public class TerminalController : MonoBehaviour
         this.device = device;//save a global reference to the device
 
         this.device.UUID = UUID; //This is not required for HC-05/06 devices and many other electronic bluetooth modules.
-
-        //Here we assign the 'Coroutine' that will handle your reading Functionality, this will improve your code style
-        //Another way to achieve this would be listening to the event Bt.OnReadingStarted, and starting the courotine from there by yourself.
-        device.ReadingCoroutine = ManageConnection;
 
         statusText.text = "Remote Device : " + device.Name;
 
@@ -102,42 +99,18 @@ public class TerminalController : MonoBehaviour
 
 
 
-    //############### Reading Data  #####################
-    //Please note that you don't have to use Couroutienes, you can just put your code in the Update() method. Like what we did in the BasicDemo
-    IEnumerator ManageConnection(BluetoothDevice device)
-    {//Manage Reading Coroutine
-
-        //Switch to Terminal View
-        // DataCanvas.SetActive(true);
-
-
-        while (device.IsReading)
+    public async Task<string> ReadBTMessageAsync()
+    {
+        // byte[] msg = await Task.Run(() => device.read());
+        await Task.Delay(3000);  // добавить 3 секунды задержки
+        byte[] msg = device.read();
+        if (msg != null)
         {
-
-            byte[] msg = device.read();
-
-            if (msg != null)
-            {
-
-                //converting byte array to string.
-                string content = System.Text.ASCIIEncoding.ASCII.GetString(msg);
-
-                //here we split the string into lines. '\n','\r' are charachter used to represent new line.
-                string[] lines = content.Split(new char[] { '\n', '\r' });
-
-                //Add those lines to the scrollText
-                // TODO полученный результат нужно кудато деть
-                readDataText.add(device.Name, lines);
-
-                /* Note: You should notice the possiblity that at the time of calling read() a whole line has not yet completly recieved.
-                 * This will split a line into two or more lines between consecutive read() calls. This is not hard to fix, but the goal here is to keep the code simple.
-                 * To see a solution using methods of this library check out the "High Bit Rate demo". 
-                 */
-            }
-            yield return null;
+            string content = System.Text.ASCIIEncoding.ASCII.GetString(msg);
+            return content;
         }
-        //Switch to Menue View after reading stoped
-        //DataCanvas.SetActive(false);
+
+        return null;
     }
 
 
@@ -155,5 +128,6 @@ public class TerminalController : MonoBehaviour
     public void OnSwitchOff()
     {
         BluetoothPanel.SetActive(false);
+        disconnect();
     }
 }

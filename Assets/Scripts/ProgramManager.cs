@@ -144,10 +144,9 @@ public class ProgramManager : EventInvoker
     async Task<string> sendBluetoothMessage(string message)
     {
         infoController.GetComponent<TerminalController>().send(message);
-
+        string response = await infoController.GetComponent<TerminalController>().ReadBTMessageAsync();
         // todo добавить ожидание ответа
-        await Task.Delay(1000);
-        return "OK";
+        return response;
     }
 
     void StopProgram()
