@@ -23,6 +23,7 @@ public class ProgramManager : EventInvoker
     bool isProgramRunning;
     List<GameObject> elements = new List<GameObject>();
     List<GameObject> overlays = new List<GameObject>();
+    Image ERImage;
     void Awake()
     {
         EventManager.Initialize();
@@ -34,10 +35,12 @@ public class ProgramManager : EventInvoker
         overlays.AddRange(GameObject.FindGameObjectsWithTag("Overlay"));
         statusText = GameObject.Find("StatusText");
         infoController = Window.instance.InfoController;
-
+        ERImage = Window.instance.ErrorIcon.GetComponentInChildren<UnityEngine.UI.Image>();
         unityEvents.Add(EventNames.StartProgramEvent, new StartProgramEvent());
         unityEvents.Add(EventNames.StopProgramEvent, new StopProgramEvent());
+        unityEvents.Add(EventNames.ErrorEvent, new ErrorEvent());
         unityEvents.Add(EventNames.ProgramCompletedEvent, new ProgramCompletedEvent());
+        EventManager.AddInvoker(EventNames.ErrorEvent, this);
         EventManager.AddInvoker(EventNames.StartProgramEvent, this);
         EventManager.AddInvoker(EventNames.StopProgramEvent, this);
         EventManager.AddInvoker(EventNames.ProgramCompletedEvent, this);
@@ -64,6 +67,7 @@ public class ProgramManager : EventInvoker
     {
         if (!isProgramRunning)
         {
+            ClearError();
             foreach (Transform child in workSpaceGrid.transform)
             {
                 Destroy(child.gameObject);
@@ -75,6 +79,7 @@ public class ProgramManager : EventInvoker
         statusText.GetComponent<TMP_Text>().text = "STATUS:";
         statusText.GetComponent<TMP_Text>().color = new Color(0.05528744f, 0.5283019f, 0, 1);
         GameObject.Find("ClearButton").GetComponent<UIButton>().interactable = false;
+        ClearError();
         elements.Clear();
         elements.AddRange(GameObject.FindGameObjectsWithTag("Element"));
         foreach (GameObject overlays in overlays)
@@ -105,7 +110,11 @@ public class ProgramManager : EventInvoker
     }
     void HandleErrorEvent()
     {
+        Window.instance.ErrorIcon.GetComponent<UIToggle>().isOn = true;
+        Window.instance.ErrorIcon.GetComponent<UIToggle>().interactable = true;
 
+        ERImage.color = new Color(0.7f, 0, 0, 1);
+        isProgramRunning = false;
     }
     async void StartBluetoothSending()
     {
@@ -164,8 +173,19 @@ public class ProgramManager : EventInvoker
     }
     public void ClearError()
     {
-        Image ERImage = Window.instance.ErrorIcon.GetComponent<UnityEngine.UI.Image>();
-        UIAnimation ERAnimation = Window.instance.ErrorIcon.GetComponent<UIAnimation>();
+
+        Window.instance.ErrorIcon.GetComponent<UIToggle>().isOn = false;
+        Window.instance.ErrorIcon.GetComponent<UIToggle>().interactable = false;
+        Window.instance.ErrorIcon.GetComponent<UIToggle>().SetState(UISelectionState.Disabled);
         ERImage.color = new Color(0.35f, 0.35f, 0.35f, 1);
+    }
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+
+        {
+            unityEvents[EventNames.ErrorEvent].Invoke();
+        }
+
     }
 }

@@ -31,7 +31,6 @@ public class TerminalController : EventInvoker
     {
         EventManager.AddInvoker(EventNames.ErrorEvent, this);
         unityEvents.Add(EventNames.ErrorEvent, new ErrorEvent());
-
     }
     void HandleOnDeviceOff(BluetoothDevice dev)
     {
@@ -118,17 +117,15 @@ public class TerminalController : EventInvoker
             byte[] msg = device.read();
             if (msg != null)
             {
-                if (System.Text.ASCIIEncoding.ASCII.GetString(msg) == "ER")
+                content = System.Text.ASCIIEncoding.ASCII.GetString(msg).Trim();
+                if (content == "ER")
                 {
                     unityEvents[EventNames.ErrorEvent].Invoke();
-                    content = System.Text.ASCIIEncoding.ASCII.GetString(msg);
                     return content;
                 }
                 else
-                {
-                    content = System.Text.ASCIIEncoding.ASCII.GetString(msg);
                     return content;
-                }
+
 
             }
 
@@ -159,17 +156,19 @@ public class TerminalController : EventInvoker
             BluetoothPanel.SetActive(false);
             disconnect();
             statusText.text = "Remote Device : " + device.Name + ". Disconnected";
+            Window.instance.BluetoothSwitch.GetComponent<Image>().color = new Color(0.2862745f, 0.2862745f, 0.2862745f, 1);
         }
         else
             BluetoothPanel.SetActive(false);
     }
-    private void Update()
+    void Update()
     {
         if (device != null)
         {
             if (device.IsConnected & !isAlreadyConnected)
             {
                 statusText.text = "Remote Device : " + device.Name + ". Connected";
+                Window.instance.BluetoothSwitch.GetComponent<Image>().color = new Color(0.1333333f, 0.3372549f, 0.6235294f, 1);
                 isAlreadyConnected = true;
                 BluetoothPanel.SetActive(false);
             }

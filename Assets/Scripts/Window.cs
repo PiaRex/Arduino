@@ -16,6 +16,7 @@ public class Window : MonoBehaviour
 
     public GameObject InfoController;
     public GameObject ErrorIcon;
+    public GameObject BluetoothSwitch;
     public List<BaseElementClass> commandElementsList = new List<BaseElementClass>();
 
     private void Awake()
