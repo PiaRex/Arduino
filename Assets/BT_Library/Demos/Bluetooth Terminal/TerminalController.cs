@@ -103,15 +103,15 @@ public class TerminalController : MonoBehaviour
     public async Task<string> ReadBTMessageAsync()
     {
         string content = null;
-        while (content == null || count == 40)
+        while (content == null || count >= 40)
         {
+            count++;
             await Task.Delay(100);
             byte[] msg = device.read();
             if (msg != null)
             {
                 content = System.Text.ASCIIEncoding.ASCII.GetString(msg);
             }
-            count++;
         }
         if (content != null)
         {
