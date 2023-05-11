@@ -16,6 +16,7 @@ public class TerminalController : MonoBehaviour
     public GameObject DataCanvas;
     public BluetoothDevice device;
     public Text dataToSend;
+    private int count;
 
     void Awake()
     {
@@ -101,16 +102,19 @@ public class TerminalController : MonoBehaviour
 
     public async Task<string> ReadBTMessageAsync()
     {
-        // byte[] msg = await Task.Run(() => device.read());
-        await Task.Delay(3000);  // добавить 3 секунды задержки
-        byte[] msg = device.read();
-        if (msg != null)
+        string content = null;
+        while (content == null || count == 40)
         {
-            string content = System.Text.ASCIIEncoding.ASCII.GetString(msg);
-            return content;
+            await Task.Delay(100);
+            byte[] msg = device.read();
+            if (msg != null)
+            {
+                content = System.Text.ASCIIEncoding.ASCII.GetString(msg);
+            }
+            count++;
         }
 
-        return null;
+        return content;
     }
 
 
