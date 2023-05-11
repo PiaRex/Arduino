@@ -38,13 +38,11 @@ public class TerminalController : MonoBehaviour
     {
         this.device = device;//save a global reference to the device
 
-
         this.device.UUID = UUID; //This is not required for HC-05/06 devices and many other electronic bluetooth modules.
 
         //Here we assign the 'Coroutine' that will handle your reading Functionality, this will improve your code style
         //Another way to achieve this would be listening to the event Bt.OnReadingStarted, and starting the courotine from there by yourself.
         device.ReadingCoroutine = ManageConnection;
-
 
         statusText.text = "Remote Device : " + device.Name;
 
@@ -139,7 +137,7 @@ public class TerminalController : MonoBehaviour
             yield return null;
         }
         //Switch to Menue View after reading stoped
-        DataCanvas.SetActive(false);
+        //DataCanvas.SetActive(false);
     }
 
 
