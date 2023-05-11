@@ -15,7 +15,7 @@ using Doozy.Runtime.UIManager;
 using System.Threading.Tasks;
 using UnityEngine.EventSystems;
 using TechTweaking.Bluetooth;
-
+using Image = UnityEngine.UI.Image;
 
 public class ProgramManager : EventInvoker
 {
@@ -37,14 +37,13 @@ public class ProgramManager : EventInvoker
 
         unityEvents.Add(EventNames.StartProgramEvent, new StartProgramEvent());
         unityEvents.Add(EventNames.StopProgramEvent, new StopProgramEvent());
-        unityEvents.Add(EventNames.ErrorEvent, new ErrorEvent());
         unityEvents.Add(EventNames.ProgramCompletedEvent, new ProgramCompletedEvent());
         EventManager.AddInvoker(EventNames.StartProgramEvent, this);
         EventManager.AddInvoker(EventNames.StopProgramEvent, this);
-        EventManager.AddInvoker(EventNames.ErrorEvent, this);
         EventManager.AddInvoker(EventNames.ProgramCompletedEvent, this);
         EventManager.AddListener(EventNames.StartProgramEvent, HandleStartProgramEvent);
         EventManager.AddListener(EventNames.StopProgramEvent, HandleStopProgramEvent);
+        EventManager.AddListener(EventNames.ErrorEvent, HandleErrorEvent);
     }
     public void StartStopClick()
     {
@@ -104,7 +103,10 @@ public class ProgramManager : EventInvoker
             element.GetComponent<UIButton>().interactable = true;
         }
     }
+    void HandleErrorEvent()
+    {
 
+    }
     async void StartBluetoothSending()
     {
         Debug.Log("Начало отправки");
@@ -158,16 +160,12 @@ public class ProgramManager : EventInvoker
 
     void setStatusText(string command, string status)
     {
-        statusText.GetComponent<TMP_Text>().text = "STATUS: " + command + ": " + status;
+        statusText.GetComponent<TMP_Text>().text = "STATUS: " + command + " -> " + status;
     }
-
-
-    // todo а зачем ту это??????
-    void Update()
+    public void ClearError()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-
-        }
+        Image ERImage = Window.instance.ErrorIcon.GetComponent<UnityEngine.UI.Image>();
+        UIAnimation ERAnimation = Window.instance.ErrorIcon.GetComponent<UIAnimation>();
+        ERImage.color = new Color(0.35f, 0.35f, 0.35f, 1);
     }
 }

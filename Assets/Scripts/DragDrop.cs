@@ -13,13 +13,11 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
     private Canvas canvas;
     private GameObject rightPanelDelete;
 
-
     private void Start()
     {
         rectTransform = GetComponent<RectTransform>();
         canvas = GetComponentInParent<Canvas>();
         rightPanelDelete = Window.instance.RightPanelDelete;
-
         rightPanelDelete.SetActive(false);
     }
     public void OnPointerDown(PointerEventData eventData)
@@ -38,7 +36,23 @@ public class DragDrop : MonoBehaviour, IPointerDownHandler, IBeginDragHandler, I
         rectTransform.GetComponentInChildren<Image>().raycastTarget = false;
         rectTransform.SetParent(Window.instance.transform);
 
+
         rightPanelDelete.SetActive(true);
+        Image RPImage = rightPanelDelete.GetComponent<Image>();
+        Image RPCImage = GameObject.Find("RPCImage").GetComponent<Image>();
+        print(RPImage);
+        print(RPCImage);
+        if (dropParent.parent == Window.instance.elementsPanel)
+        {
+            RPImage.color = new Color(RPImage.color.r, RPImage.color.g, RPImage.color.b, 0);
+            RPCImage.color = new Color(RPCImage.color.r, RPCImage.color.g, RPCImage.color.b, 0);
+        }
+        else
+        {
+            RPImage.color = new Color(RPImage.color.r, RPImage.color.g, RPImage.color.b, 0.6f);
+            RPCImage.color = new Color(RPCImage.color.r, RPCImage.color.g, RPCImage.color.b, 0.6f);
+        }
+
         print("DRAGDROP      OnBeginDrag");
     }
 

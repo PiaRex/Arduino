@@ -6,7 +6,7 @@ using TechTweaking.Bluetooth;
 using UnityEngine.UI;
 using System.Threading.Tasks;
 
-public class TerminalController : MonoBehaviour
+public class TerminalController : EventInvoker
 {
     private const string UUID = "0acc9c7c-48e1-41d2-acaa-610d1a7b085e";
     public TMP_Text statusText;
@@ -15,15 +15,22 @@ public class TerminalController : MonoBehaviour
     public GameObject BluetoothPanel, ConnectionButton;
     public GameObject DataCanvas;
     public BluetoothDevice device;
+
     public Text dataToSend;
     private int count;
-
+    bool isAlreadyConnected;
     void Awake()
     {
         BluetoothAdapter.askEnableBluetooth();//Ask user to enable Bluetooth
 
         BluetoothAdapter.OnDeviceOFF += HandleOnDeviceOff;
         BluetoothAdapter.OnDevicePicked += HandleOnDevicePicked; //To get what device the user picked out of the devices list
+
+    }
+    private void Start()
+    {
+        EventManager.AddInvoker(EventNames.ErrorEvent, this);
+        unityEvents.Add(EventNames.ErrorEvent, new ErrorEvent());
 
     }
     void HandleOnDeviceOff(BluetoothDevice dev)
@@ -57,9 +64,9 @@ public class TerminalController : MonoBehaviour
     {
         if (device != null)
         {
-            device.connect();
-
+            isAlreadyConnected = false;
             statusText.text = "Remote Device : " + device.Name + ". Trying to connect...";
+            device.connect();
         }
         else
             statusText.text = "Remote Device not selected";
@@ -103,24 +110,32 @@ public class TerminalController : MonoBehaviour
     public async Task<string> ReadBTMessageAsync()
     {
         string content = null;
-        while (content == null || count >= 40)
+        count = 0;
+        while (content != null || count < 40)
         {
             count++;
             await Task.Delay(100);
             byte[] msg = device.read();
             if (msg != null)
             {
-                content = System.Text.ASCIIEncoding.ASCII.GetString(msg);
+                if (System.Text.ASCIIEncoding.ASCII.GetString(msg) == "ER")
+                {
+                    unityEvents[EventNames.ErrorEvent].Invoke();
+                    content = System.Text.ASCIIEncoding.ASCII.GetString(msg);
+                    return content;
+                }
+                else
+                {
+                    content = System.Text.ASCIIEncoding.ASCII.GetString(msg);
+                    return content;
+                }
+
             }
+
         }
-        if (content != null)
-        {
-            return content;
-        }
-        else
-        {
-            return "нет ответа";
-        }
+        return "Not Responding";
+
+
 
 
     }
@@ -139,7 +154,26 @@ public class TerminalController : MonoBehaviour
     }
     public void OnSwitchOff()
     {
-        BluetoothPanel.SetActive(false);
-        disconnect();
+        if (device != null)
+        {
+            BluetoothPanel.SetActive(false);
+            disconnect();
+            statusText.text = "Remote Device : " + device.Name + ". Disconnected";
+        }
+        else
+            BluetoothPanel.SetActive(false);
+    }
+    private void Update()
+    {
+        if (device != null)
+        {
+            if (device.IsConnected & !isAlreadyConnected)
+            {
+                statusText.text = "Remote Device : " + device.Name + ". Connected";
+                isAlreadyConnected = true;
+                BluetoothPanel.SetActive(false);
+            }
+        }
+
     }
 }
