@@ -119,8 +119,6 @@ public class ProgramManager : EventInvoker
             string message = child.GetComponent<messageBluetooth>().message; // получаем мессагу из кнопки
             var responceBluetooth = await sendBluetoothMessage(message); // отправляем мессагу в блютуз получаем респонс
 
-            infoController.GetComponent<TerminalController>().send(message);
-
             setStatusText(message, responceBluetooth); // выводим статус
 
             Debug.Log("отправка сообщения: " + message + " статус: " + responceBluetooth);
@@ -145,9 +143,7 @@ public class ProgramManager : EventInvoker
 
     async Task<string> sendBluetoothMessage(string message)
     {
-        TerminalController controller = new TerminalController();
-        controller.device = new BluetoothDevice();
-        controller.send("Hello, world!");
+        infoController.GetComponent<TerminalController>().send(message);
 
         // todo добавить ожидание ответа
         await Task.Delay(1000);

@@ -110,7 +110,7 @@ public class TerminalController : MonoBehaviour
     {//Manage Reading Coroutine
 
         //Switch to Terminal View
-        DataCanvas.SetActive(true);
+        // DataCanvas.SetActive(true);
 
 
         while (device.IsReading)
@@ -128,6 +128,7 @@ public class TerminalController : MonoBehaviour
                 string[] lines = content.Split(new char[] { '\n', '\r' });
 
                 //Add those lines to the scrollText
+                // TODO полученный результат нужно кудато деть
                 readDataText.add(device.Name, lines);
 
                 /* Note: You should notice the possiblity that at the time of calling read() a whole line has not yet completly recieved.
