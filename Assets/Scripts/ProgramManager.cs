@@ -158,7 +158,6 @@ public class ProgramManager : EventInvoker
     {
         unityEvents[EventNames.StopProgramEvent].Invoke();
         StartButton.GetComponentInChildren<TMP_Text>().text = "START";
-        statusText.GetComponent<TMP_Text>().text = "STATUS:";
         isProgramRunning = false;
     }
 
