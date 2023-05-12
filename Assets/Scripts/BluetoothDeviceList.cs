@@ -10,7 +10,7 @@ public class BluetoothDeviceList : MonoBehaviour
         {
             using (var currentActivity = javaUnityPlayer.GetStatic<AndroidJavaObject>("currentActivity"))
             {
-                bluetoothDevices = new AndroidJavaObject("com.microwave.bluetootheunity.BluetoothDevices");
+                bluetoothDevices = new AndroidJavaObject("com.microwave.mylibrary.BluetoothDevices");
             }
         }
 

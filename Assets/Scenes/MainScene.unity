@@ -17404,7 +17404,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1217490179}
         m_TargetAssemblyTypeName: BtDiscovery, Assembly-CSharp
-        m_MethodName: startDiscovery
+        m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -17413,8 +17413,8 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 1217490180}
+        m_CallState: 0
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: BluetoothDeviceList, Assembly-CSharp
         m_MethodName: StartSearch
         m_Mode: 1
@@ -28754,7 +28754,6 @@ GameObject:
   - component: {fileID: 1217490175}
   - component: {fileID: 1217490178}
   - component: {fileID: 1217490179}
-  - component: {fileID: 1217490180}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -28854,18 +28853,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   deviceButton: {fileID: 5179447090717790640, guid: c1f2795bb1f5ff34db73f9a1c10ef5f1, type: 3}
   DeviceText: {fileID: 1481588264}
---- !u!114 &1217490180
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1217490174}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d3757db616b2d7b4ea425b35fa289dab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1225688801
 GameObject:
   m_ObjectHideFlags: 0
