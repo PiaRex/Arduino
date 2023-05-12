@@ -1,3 +1,4 @@
+using System.Reflection.Emit;
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
@@ -15,6 +16,10 @@ public class TerminalController : EventInvoker
     public GameObject BluetoothPanel, ConnectionButton;
     public GameObject DataCanvas;
     public BluetoothDevice device;
+    public GameObject deviceListText;
+
+    public Button connectButtonPrefab; // Prefab кнопки "Connect"
+    public Transform deviceList; // Родительский объект для кнопок
 
     public Text dataToSend;
     private int count;
@@ -51,6 +56,32 @@ public class TerminalController : EventInvoker
         statusText.text = "Remote Device : " + device.Name;
 
     }
+
+    public void getBluetoothDevices()
+    {
+        BluetoothDevice[] devices = BluetoothAdapter.getPairedDevices();
+        string list = "";
+        foreach (BluetoothDevice dev in devices)
+        {
+            list += dev.MacAddress + "\n";
+        }
+
+        deviceListText.GetComponent<Text>().text = list;
+        // foreach (BluetoothDevice dev in devices)
+        // {
+        //     Button connectButton = Instantiate(connectButtonPrefab, deviceList); // Создаем кнопку на сцене и делаем ее дочерним объектом buttonList
+        //     connectButton.GetComponentInChildren<Text>().text = dev.Name + ": " + dev.MacAddress; // Устанавливаем текст на кнопке
+        //     connectButton.onClick.AddListener(() => { ConnectToDevice(dev); }); // Устанавливаем свойство OnClick для каждой кнопки
+        // }
+    }
+
+    void ConnectToDevice(BluetoothDevice dev)
+    {
+        statusText.text = "Remote Device : " + device.Name;
+        dev.connect();
+    }
+
+
 
 
     //############### UI BUTTONS RELATED METHODS #####################
