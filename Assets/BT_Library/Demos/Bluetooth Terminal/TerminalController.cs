@@ -46,7 +46,7 @@ public class TerminalController : EventInvoker
     {
         this.device = device;//save a global reference to the device
 
-        this.device.UUID = UUID; //This is not required for HC-05/06 devices and many other electronic bluetooth modules.
+        // this.device.UUID = UUID; //This is not required for HC-05/06 devices and many other electronic bluetooth modules.
 
         statusText.text = "Remote Device : " + device.Name;
 
@@ -83,34 +83,15 @@ public class TerminalController : EventInvoker
         if (device != null)
         {
             Debug.Log("Bluetooth Sending : " + message + "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-            device.send(System.Text.Encoding.ASCII.GetBytes(message + (char)10));//10 is our seperator Byte (sepration between packets)
+            device.send(System.Text.Encoding.ASCII.GetBytes(message));
         }
     }
-
-    public void sendHello()
-    {
-        if (device != null)
-        {
-            /*
-			 * Send and Read works only with bytes. You need to convert everything to bytes.
-			 * Different devices with different encoding is the reason for this. You should know what encoding you're using.
-			 * In the method call below I'm using the ASCII encoding to send "Hello" + a new line.
-			 */
-            device.send(System.Text.Encoding.ASCII.GetBytes("Hello\n"));
-        }
-    }
-
-
-
-
-
-
 
     public async Task<string> ReadBTMessageAsync()
     {
         string content = null;
         count = 0;
-        while (content != null || count < 40)
+        while (content != null || count < 90)
         {
             count++;
             await Task.Delay(100);
@@ -125,16 +106,9 @@ public class TerminalController : EventInvoker
                 }
                 else
                     return content;
-
-
             }
-
         }
         return "Not Responding";
-
-
-
-
     }
 
 
@@ -163,6 +137,7 @@ public class TerminalController : EventInvoker
     }
     void Update()
     {
+
         if (device != null)
         {
             if (device.IsConnected & !isAlreadyConnected)
