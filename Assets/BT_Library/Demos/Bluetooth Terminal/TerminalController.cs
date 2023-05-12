@@ -46,7 +46,7 @@ public class TerminalController : EventInvoker
     {
         this.device = device;//save a global reference to the device
 
-        this.device.UUID = UUID; //This is not required for HC-05/06 devices and many other electronic bluetooth modules.
+        // this.device.UUID = UUID; //This is not required for HC-05/06 devices and many other electronic bluetooth modules.
 
         statusText.text = "Remote Device : " + device.Name;
 
@@ -83,7 +83,7 @@ public class TerminalController : EventInvoker
         if (device != null)
         {
             Debug.Log("Bluetooth Sending : " + message + "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-            device.send(System.Text.Encoding.ASCII.GetBytes(message + (char)10));//10 is our seperator Byte (sepration between packets)
+            device.send(System.Text.Encoding.ASCII.GetBytes(message));
         }
     }
 
@@ -99,12 +99,6 @@ public class TerminalController : EventInvoker
             device.send(System.Text.Encoding.ASCII.GetBytes("Hello\n"));
         }
     }
-
-
-
-
-
-
 
     public async Task<string> ReadBTMessageAsync()
     {
@@ -125,16 +119,9 @@ public class TerminalController : EventInvoker
                 }
                 else
                     return content;
-
-
             }
-
         }
         return "Not Responding";
-
-
-
-
     }
 
 
@@ -147,7 +134,6 @@ public class TerminalController : EventInvoker
     public void OnSwitchOn()
     {
         BluetoothPanel.SetActive(true);
-
     }
     public void OnSwitchOff()
     {
@@ -173,6 +159,5 @@ public class TerminalController : EventInvoker
                 BluetoothPanel.SetActive(false);
             }
         }
-
     }
 }
