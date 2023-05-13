@@ -5,7 +5,7 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/MainScene.unity
     guid: f010f073e5becd14ab28c7240ef3848a
   - enabled: 0
@@ -14,4 +14,13 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/BT_Library/Demos/Android2Android/Android2Android.unity
     guid: e0b8cc80ad85f491d993c9ad50d834ae
+  - enabled: 0
+    path: Assets/BT_Library/Demos/Devices Discovery/Discovery.unity
+    guid: 674846c9207ac496baa75a4edbe6704a
+  - enabled: 0
+    path: Assets/BluetoothAPI/Scenes/main.unity
+    guid: 43bbdd0c42e894f48b084f211b618b56
+  - enabled: 0
+    path: Assets/BluetoothAPI/Scenes/demo.unity
+    guid: 29265e594f8b847f78e35de39aefa1f9
   m_configObjects: {}
