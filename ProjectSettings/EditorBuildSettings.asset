@@ -12,6 +12,6 @@ EditorBuildSettings:
     path: Assets/BT_Library/Demos/Bluetooth Terminal/BluetoothInfo.unity
     guid: dce7e863a777c6c4082f09c67b7a9d12
   - enabled: 0
-    path: Assets/BT_Library/Demos/Android2Android/Android2Android.unity
+    path: Assets/BT_Library/Android2Android/Android2Android.unity
     guid: e0b8cc80ad85f491d993c9ad50d834ae
   m_configObjects: {}
