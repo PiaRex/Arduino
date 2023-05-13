@@ -76,37 +76,44 @@ public class ProgramManager : EventInvoker
     }
     void HandleStartProgramEvent()
     {
-        statusText.GetComponent<TMP_Text>().text = "STATUS:";
-        statusText.GetComponent<TMP_Text>().color = new Color(0.05528744f, 0.5283019f, 0, 1);
-        GameObject.Find("ClearButton").GetComponent<UIButton>().interactable = false;
-        ClearError();
-        elements.Clear();
-        elements.AddRange(GameObject.FindGameObjectsWithTag("Element"));
-        foreach (GameObject overlays in overlays)
+        if (!isProgramRunning)
         {
-            overlays.GetComponent<UnityEngine.UI.Image>().color = new Color(0, 0, 0, 0.5f);
-        }
-        foreach (GameObject element in elements)
-        {
-            Destroy(element.GetComponent<DragDrop>());
-            element.GetComponent<UIButton>().interactable = false;
+            statusText.GetComponent<TMP_Text>().text = "STATUS:";
+            statusText.GetComponent<TMP_Text>().color = new Color(0.05528744f, 0.5283019f, 0, 1);
+            GameObject.Find("ClearButton").GetComponent<UIButton>().interactable = false;
+            ClearError();
+            elements.Clear();
+            elements.AddRange(GameObject.FindGameObjectsWithTag("Element"));
+            foreach (GameObject overlays in overlays)
+            {
+                overlays.GetComponent<UnityEngine.UI.Image>().color = new Color(0, 0, 0, 0.5f);
+            }
+            foreach (GameObject element in elements)
+            {
+                Destroy(element.GetComponent<DragDrop>());
+                element.GetComponent<UIButton>().interactable = false;
+            }
         }
     }
     void HandleStopProgramEvent()
     {
-        statusText.GetComponent<TMP_Text>().color = new Color(1, 1, 1, 1);
-        GameObject.Find("ClearButton").GetComponent<UIButton>().interactable = true;
-        foreach (GameObject overlays in overlays)
+        if (isProgramRunning)
         {
-            overlays.GetComponent<UnityEngine.UI.Image>().color = new Color(0, 0, 0, 0);
+            statusText.GetComponent<TMP_Text>().color = new Color(1, 1, 1, 1);
+            GameObject.Find("ClearButton").GetComponent<UIButton>().interactable = true;
+            foreach (GameObject overlays in overlays)
+            {
+                overlays.GetComponent<UnityEngine.UI.Image>().color = new Color(0, 0, 0, 0);
+            }
+            elements.Clear();
+            elements.AddRange(GameObject.FindGameObjectsWithTag("Element"));
+            foreach (GameObject element in elements)
+            {
+                element.AddComponent<DragDrop>();
+                element.GetComponent<UIButton>().interactable = true;
+            }
         }
-        elements.Clear();
-        elements.AddRange(GameObject.FindGameObjectsWithTag("Element"));
-        foreach (GameObject element in elements)
-        {
-            element.AddComponent<DragDrop>();
-            element.GetComponent<UIButton>().interactable = true;
-        }
+
     }
     void HandleErrorEvent()
     {
