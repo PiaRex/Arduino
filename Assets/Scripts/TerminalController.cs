@@ -5,6 +5,7 @@ using TMPro;
 using TechTweaking.Bluetooth;
 using UnityEngine.UI;
 using System.Threading.Tasks;
+using UnityEngine.Android;
 
 public class TerminalController : EventInvoker
 {
@@ -18,12 +19,23 @@ public class TerminalController : EventInvoker
     bool isAlreadyConnected;
     void Awake()
     {
-        Debug.Log("Terminal awake!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+        if (!Permission.HasUserAuthorizedPermission(Permission.CoarseLocation)
+          || !Permission.HasUserAuthorizedPermission(Permission.FineLocation)
+          || !Permission.HasUserAuthorizedPermission("android.permission.BLUETOOTH_SCAN")
+          || !Permission.HasUserAuthorizedPermission("android.permission.BLUETOOTH")
+          || !Permission.HasUserAuthorizedPermission("android.permission.BLUETOOTH_ADMIN")
+          || !Permission.HasUserAuthorizedPermission("android.permission.BLUETOOTH_CONNECT"))
+            Permission.RequestUserPermissions(new string[] {
+    Permission.CoarseLocation,
+    Permission.FineLocation,
+    "android.permission.BLUETOOTH_SCAN",
+    "android.permission.BLUETOOTH",
+    "android.permission.BLUETOOTH_ADMIN",
+    "android.permission.BLUETOOTH_CONNECT"
+  });
         BluetoothAdapter.askEnableBluetooth();//Ask user to enable Bluetooth
-
         BluetoothAdapter.OnDeviceOFF += HandleOnDeviceOff;
         BluetoothAdapter.OnDevicePicked += HandleOnDevicePicked; //To get what device the user picked out of the devices list
-
     }
     private void Start()
     {
@@ -42,13 +54,11 @@ public class TerminalController : EventInvoker
 
     void HandleOnDevicePicked(BluetoothDevice device)//Called when device is Picked by user
     {
-        Debug.Log("HandleOnDevicePicked!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         this.device = device;//save a global reference to the device
 
-        // this.device.UUID = UUID; //This is not required for HC-05/06 devices and many other electronic bluetooth modules.
+        this.device.UUID = UUID; //This is not required for HC-05/06 devices and many other electronic bluetooth modules.
 
         statusText.text = "Remote Device : " + device.Name;
-
     }
 
 
@@ -109,9 +119,6 @@ public class TerminalController : EventInvoker
         }
         return "Not Responding";
     }
-
-
-    //############### UnRegister Events  #####################
     void OnDestroy()
     {
         BluetoothAdapter.OnDevicePicked -= HandleOnDevicePicked;
@@ -135,7 +142,6 @@ public class TerminalController : EventInvoker
     }
     void Update()
     {
-
         if (device != null)
         {
             if (device.IsConnected & !isAlreadyConnected)
