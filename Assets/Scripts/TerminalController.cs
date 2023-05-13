@@ -13,14 +13,12 @@ public class TerminalController : EventInvoker
     public ScrollTerminalUI readDataText;//ScrollTerminalUI is a script used to control the ScrollView text
 
     public GameObject BluetoothPanel, ConnectionButton;
-    public GameObject DataCanvas;
     public BluetoothDevice device;
-
-    public Text dataToSend;
     private int count;
     bool isAlreadyConnected;
     void Awake()
     {
+        Debug.Log("Terminal awake!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         BluetoothAdapter.askEnableBluetooth();//Ask user to enable Bluetooth
 
         BluetoothAdapter.OnDeviceOFF += HandleOnDeviceOff;
@@ -44,9 +42,10 @@ public class TerminalController : EventInvoker
 
     void HandleOnDevicePicked(BluetoothDevice device)//Called when device is Picked by user
     {
+        Debug.Log("HandleOnDevicePicked!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
         this.device = device;//save a global reference to the device
 
-        // this.device.UUID = UUID; //This is not required for HC-05/06 devices and many other electronic bluetooth modules.
+        this.device.UUID = UUID; //This is not required for HC-05/06 devices and many other electronic bluetooth modules.
 
         statusText.text = "Remote Device : " + device.Name;
 
@@ -83,20 +82,7 @@ public class TerminalController : EventInvoker
         if (device != null)
         {
             Debug.Log("Bluetooth Sending : " + message + "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-            device.send(System.Text.Encoding.ASCII.GetBytes(message));
-        }
-    }
-
-    public void sendHello()
-    {
-        if (device != null)
-        {
-            /*
-			 * Send and Read works only with bytes. You need to convert everything to bytes.
-			 * Different devices with different encoding is the reason for this. You should know what encoding you're using.
-			 * In the method call below I'm using the ASCII encoding to send "Hello" + a new line.
-			 */
-            device.send(System.Text.Encoding.ASCII.GetBytes("Hello\n"));
+            device.send(System.Text.Encoding.ASCII.GetBytes(message + (char)10));//10 is our seperator Byte (sepration between packets)
         }
     }
 
@@ -119,7 +105,10 @@ public class TerminalController : EventInvoker
                 }
                 else
                     return content;
+
+
             }
+
         }
         return "Not Responding";
     }
