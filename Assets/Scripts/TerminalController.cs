@@ -18,13 +18,11 @@ public class TerminalController : EventInvoker
     bool isAlreadyConnected;
     void Awake()
     {
-        if (!Permission.HasUserAuthorizedPermission(Permission.CoarseLocation)
-          || !Permission.HasUserAuthorizedPermission("android.permission.BLUETOOTH_SCAN")
+        if (!Permission.HasUserAuthorizedPermission("android.permission.BLUETOOTH_SCAN")
           || !Permission.HasUserAuthorizedPermission("android.permission.BLUETOOTH")
           || !Permission.HasUserAuthorizedPermission("android.permission.BLUETOOTH_ADMIN")
           || !Permission.HasUserAuthorizedPermission("android.permission.BLUETOOTH_CONNECT"))
             Permission.RequestUserPermissions(new string[] {
-    Permission.CoarseLocation,
     "android.permission.BLUETOOTH_SCAN",
     "android.permission.BLUETOOTH",
     "android.permission.BLUETOOTH_ADMIN",
