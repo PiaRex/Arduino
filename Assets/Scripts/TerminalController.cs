@@ -6,6 +6,7 @@ using TechTweaking.Bluetooth;
 using UnityEngine.UI;
 using System.Threading.Tasks;
 using UnityEngine.Android;
+using System.Threading;
 
 public class TerminalController : EventInvoker
 {
@@ -27,8 +28,7 @@ public class TerminalController : EventInvoker
     "android.permission.BLUETOOTH_SCAN",
     "android.permission.BLUETOOTH",
     "android.permission.BLUETOOTH_ADMIN",
-    "android.permission.BLUETOOTH_CONNECT"
-  });
+    "android.permission.BLUETOOTH_CONNECT" });
         BluetoothAdapter.askEnableBluetooth();//Ask user to enable Bluetooth
         BluetoothAdapter.OnDeviceOFF += HandleOnDeviceOff;
         BluetoothAdapter.OnDevicePicked += HandleOnDevicePicked; //To get what device the user picked out of the devices list
@@ -97,7 +97,7 @@ public class TerminalController : EventInvoker
     {
         string content = null;
         count = 0;
-        while (content != null || count < 40)
+        while (content != null || count < 50)
         {
             count++;
             await Task.Delay(100);
@@ -110,11 +110,18 @@ public class TerminalController : EventInvoker
                     unityEvents[EventNames.ErrorEvent].Invoke();
                     return content;
                 }
-                else
+                else if (content == "OK")
                     return content;
+                else
+                {
+                    unityEvents[EventNames.ErrorEvent].Invoke();
+                    return "Incorrect data (" + content + ")";
+                }
             }
         }
         return "Not Responding";
+
+
     }
     void OnDestroy()
     {
@@ -141,6 +148,7 @@ public class TerminalController : EventInvoker
     {
         if (device != null)
         {
+
             if (device.IsConnected & !isAlreadyConnected)
             {
                 statusText.text = "Remote Device : " + device.Name + ". Connected";

@@ -24,6 +24,7 @@ public class ProgramManager : EventInvoker
     List<GameObject> elements = new List<GameObject>();
     List<GameObject> overlays = new List<GameObject>();
     Image ERImage;
+
     void Awake()
     {
         EventManager.Initialize();
@@ -47,6 +48,7 @@ public class ProgramManager : EventInvoker
         EventManager.AddListener(EventNames.StartProgramEvent, HandleStartProgramEvent);
         EventManager.AddListener(EventNames.StopProgramEvent, HandleStopProgramEvent);
         EventManager.AddListener(EventNames.ErrorEvent, HandleErrorEvent);
+
     }
     public void StartStopClick()
     {
@@ -54,8 +56,7 @@ public class ProgramManager : EventInvoker
         {
             unityEvents[EventNames.StartProgramEvent].Invoke();
             StartButton.GetComponentInChildren<TMP_Text>().text = "STOP";
-            isProgramRunning = true;
-            StartBluetoothSending();
+
         }
         else
         {
@@ -93,6 +94,8 @@ public class ProgramManager : EventInvoker
                 Destroy(element.GetComponent<DragDrop>());
                 element.GetComponent<UIButton>().interactable = false;
             }
+            isProgramRunning = true;
+            StartBluetoothSending();
         }
     }
     void HandleStopProgramEvent()
@@ -121,7 +124,7 @@ public class ProgramManager : EventInvoker
         Window.instance.ErrorIcon.GetComponent<UIToggle>().interactable = true;
 
         ERImage.color = new Color(0.7f, 0, 0, 1);
-        isProgramRunning = false;
+        StopProgram();
     }
     async void StartBluetoothSending()
     {
@@ -157,14 +160,20 @@ public class ProgramManager : EventInvoker
         }
         StopProgram();
         Debug.Log("Конец отправки");
+
     }
 
     async Task<string> sendBluetoothMessage(string message)
     {
-        infoController.GetComponent<TerminalController>().send(message);
-        string response = await infoController.GetComponent<TerminalController>().ReadBTMessageAsync();
-        // todo добавить ожидание ответа
-        return response;
+        if (isProgramRunning)
+        {
+            infoController.GetComponent<TerminalController>().send(message);
+            string response = await infoController.GetComponent<TerminalController>().ReadBTMessageAsync();
+            // todo добавить ожидание ответа
+            return response;
+        }
+        else
+            return null;
     }
 
     void StopProgram()
@@ -188,11 +197,7 @@ public class ProgramManager : EventInvoker
     }
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
 
-        {
-            unityEvents[EventNames.ErrorEvent].Invoke();
-        }
 
     }
 }
