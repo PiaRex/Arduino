@@ -168,8 +168,15 @@ public class ProgramManager : EventInvoker
         if (isProgramRunning)
         {
             infoController.GetComponent<TerminalController>().send(message);
-            string response = await infoController.GetComponent<TerminalController>().ReadBTMessageAsync();
-            // todo добавить ожидание ответа
+
+            string response = "";
+            int i = 5;
+            do
+            {
+                response = await infoController.GetComponent<TerminalController>().ReadBTMessageAsync();
+                i--;
+            } while (response.Contains("Incorrect data") || i == 0);
+
             return response;
         }
         else

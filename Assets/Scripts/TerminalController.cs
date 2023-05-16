@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
@@ -93,34 +94,40 @@ public class TerminalController : EventInvoker
     }
     public async Task<string> ReadBTMessageAsync()
     {
+        Debug.Log("TerminalController: попытка чтения сообщения: ");
         string content = null;
         count = 0;
         while (content != null || count < 50)
         {
+            Debug.Log("TerminalController: попытка чтения сообщения: " + count);
             count++;
             await Task.Delay(100);
             byte[] msg = device.read();
             if (msg != null)
             {
-                content = System.Text.ASCIIEncoding.ASCII.GetString(msg).Trim();
-                if (content == "ER")
+                content = System.Text.ASCIIEncoding.ASCII.GetString(msg);
+                if (content.Contains("ER"))
                 {
                     unityEvents[EventNames.ErrorEvent].Invoke();
-                    return content;
+                    Debug.Log("TerminalController:прочитано ER: " + "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1");
+                    return "ER";
                 }
-                else if (content == "OK")
-                    return content;
+                else if (content.Contains("OK"))
+                {
+                    Debug.Log("TerminalController:прочитано OK: " + "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1");
+                    return "OK";
+                }
                 else
                 {
-                    unityEvents[EventNames.ErrorEvent].Invoke();
+                    Debug.Log("TerminalController: не корректные данные: " + content + "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1");
                     return "Incorrect data (" + content + ")";
                 }
             }
         }
+        Debug.Log("TerminalController: не дождались ответа: " + "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1");
         return "Not Responding";
-
-
     }
+
     void OnDestroy()
     {
         BluetoothAdapter.OnDevicePicked -= HandleOnDevicePicked;
